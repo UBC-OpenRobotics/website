@@ -10,6 +10,9 @@ interface NavigationProps {
 }
 
 const Navigation: React.FC<NavigationProps> = ({ items }) => {
+
+  const NAV_FONT_SIZE = 'text-base'; // text-xs, text-sm, text-base, text-lg, text-xl
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -57,17 +60,17 @@ const Navigation: React.FC<NavigationProps> = ({ items }) => {
   }, [isDropdownOpen]);
 
   return (
-    <nav className="bg-white w-full border-b fixed top-0 z-50" style={{ fontFamily: "'JetBrains Mono', sans-serif" }}>
+    <nav className="bg-white dark:bg-gray-800 w-full border-b border-gray-200 dark:border-gray-700 fixed top-0 z-50 transition-colors duration-200 shadow-md dark:shadow-none" style={{ fontFamily: "'JetBrains Mono', sans-serif" }}>
       <div className="max-w-screen-xl mx-auto px-4 md:px-8">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between py-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between py-1">
 
           {/* Nav links */}
-          <ul className="flex flex-col md:flex-row md:space-x-12 space-y-4 md:space-y-0 mb-4 md:mb-0">
+          <ul className="flex flex-col md:flex-row md:space-x-12 space-y-2 md:space-y-0 mb-2 md:mb-0">
             {items.map((item, index) => (
               <li key={index}>
                 <a
                   href={item.link}
-                  className="text-gray-900 hover:text-red-600 font-semibold md:text-2xl"
+                  className={`text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 font-semibold md:${NAV_FONT_SIZE} transition-colors`}
                 >
                   {item.name}
                 </a>
@@ -82,7 +85,7 @@ const Navigation: React.FC<NavigationProps> = ({ items }) => {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={toggleLocationDropdown}
-                className="p-2 text-gray-900 hover:text-red-600 transition-colors"
+                className="p-2 text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 transition-colors"
                 aria-label="Location"
               >
                 <span className="material-icons text-3xl">location_on</span>
@@ -92,21 +95,21 @@ const Navigation: React.FC<NavigationProps> = ({ items }) => {
               <div
                 className={`${
                   isDropdownOpen ? '' : 'hidden'
-                } md:absolute md:right-0 md:mt-2 md:w-80 md:border md:border-gray md:rounded-lg md:shadow-xl fixed inset-0 md:inset-auto bg-white z-50`}
+                } md:absolute md:right-0 md:mt-2 md:w-80 md:border md:border-gray-300 dark:md:border-gray-600 md:rounded-lg md:shadow-xl fixed inset-0 md:inset-auto bg-white dark:bg-gray-800 z-50 transition-colors duration-200`}
               >
                 {/* Mobile header */}
-                <div className="md:hidden flex items-center justify-between p-4 border-b-2 border-gray-200">
-                  <h3 className="text-xl font-bold text-gray-900">Our Location</h3>
-                  <button onClick={toggleLocationDropdown} className="p-1 text-gray-900 hover:text-red-600">
+                <div className="md:hidden flex items-center justify-between p-4 border-b-2 border-gray-200 dark:border-gray-700">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">Our Location</h3>
+                  <button onClick={toggleLocationDropdown} className="p-1 text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500">
                     <span className="material-icons text-3xl">close</span>
                   </button>
                 </div>
 
                 <div className="p-4 md:p-4">
                   {/* Desktop header, hidden for mobile */}
-                  <h3 className="hidden md:block text-lg font-bold text-gray-900 mb-2">Our Location</h3>
+                  <h3 className="hidden md:block text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">Our Location</h3>
 
-                  <p className="text-sm md:text-sm text-gray-700 mb-3 mt-4 md:mt-0">
+                  <p className="text-sm md:text-sm text-gray-700 dark:text-gray-300 mb-3 mt-4 md:mt-0">
                     <strong>Hennings Building Room 200</strong><br />
                     6224 Agricultural Rd #325<br />
                     Vancouver, BC V6T 1Z1
@@ -147,7 +150,7 @@ const Navigation: React.FC<NavigationProps> = ({ items }) => {
             {/* Sponsor */}
             <a
               href="https://donate.support.ubc.ca/page/20924/donate/1?transaction.dirgift=Open+Robotics+Student+Team%20G1102"
-              className="py-2 px-4 border-2 border-red-600 hover:bg-red-600 text-gray-900 hover:text-white font-bold rounded-md transition-colors"
+              className={`py-2 px-4 border-2 border-red-600 hover:bg-red-600 text-gray-900 dark:text-gray-100 hover:text-white font-bold rounded-md transition-colors ${NAV_FONT_SIZE}`}
             >
               Sponsor
             </a>
