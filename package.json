@@ -1,0 +1,28 @@
+{
+  "name": "web-opbot",
+  "version": "1.0.0",
+  "description": "UBC Open Robotics website with React and TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "jekyll:serve": "bundle exec jekyll serve",
+    "jekyll:build": "bundle exec jekyll build",
+    "full:build": "npm run build && npm run jekyll:build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.2.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

@@ -23,11 +23,20 @@
 
     <link rel="stylesheet" href="/assets/css/styles.css">
     <script src="/assets/js/main.js"></script>
+    <script type="module" src="/assets/js/dist/bundle.js"></script>
 </head>
 <body>
   <header class="site-header" role="banner">
     <div class="wrapper">
-        {% include navigation.html %}
+        <div id="react-nav-root"></div>
+        <script>
+          // Pass Jekyll data to React
+          window.navigationData = [
+            {% for item in site.data.navigation %}
+            { name: "{{ item.name }}", link: "{{ item.link }}" }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+          ];
+        </script>
     </div>
   </header>
 
