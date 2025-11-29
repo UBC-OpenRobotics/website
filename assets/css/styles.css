@@ -1,8 +1,13 @@
 .gear {
     transition: transform 0.1s ease-out;
 }
-body {
-    font-family: 'Orbitron', monospace;
+html, body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
 }
 .navbar {
     transition: all 0.3s ease-in-out;
@@ -65,4 +70,8 @@ body {
     -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
     filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
     /* Similar syntax to box-shadow */
+}
+
+button {
+    font-family: 'JetBrains Mono', sans-serif !important;
 }
