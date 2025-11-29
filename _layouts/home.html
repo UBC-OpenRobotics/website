@@ -7,7 +7,10 @@ layout: default
     <h1 class="page-heading">{{ page.title }}</h1>
   {%- endif -%}
 
-  <section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
+  <section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white robotics-bg">
+    <!-- Ambient Canvas Background with Flowing Pipes -->
+    <canvas id="ambient-canvas"></canvas>
+
     <div class="text-center">
 
       <!-- OPEN ROBOTICS MAIN TEXT with Spinning Gears -->
@@ -230,6 +233,9 @@ layout: default
 
   <!-- carousel javascript -->
   <script src="{{ '/assets/js/carousel.js' | relative_url }}"></script>
+
+  <!-- ambient background javascript -->
+  <script src="{{ '/assets/js/ambient-background.js' | relative_url }}"></script>
 
 
 </div>
