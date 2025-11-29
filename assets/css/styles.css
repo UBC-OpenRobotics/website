@@ -72,6 +72,6 @@ html, body {
     /* Similar syntax to box-shadow */
 }
 
-button {
+button, .obot_button {
     font-family: 'JetBrains Mono', sans-serif !important;
 }

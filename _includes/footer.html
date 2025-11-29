@@ -14,8 +14,9 @@
       <div>
         <h3 class="text-xl font-semibold mb-4 text-red-500">Quick Links</h3>
         <ul class="space-y-2 uppercase"  style="font-family: 'JetBrains Mono', sans-serif">
-          <li><a href="{{ '/projects' | relative_url }}" class="text-gray-300 hover:text-red-500 transition-colors">Projects</a></li>
-          <li><a href="{{ '/contact' | relative_url }}" class="text-gray-300 hover:text-red-500 transition-colors">Contact</a></li>
+          {% for item in site.data.navigation %}
+          <li><a href="{{ item.link }}" class="text-gray-300 hover:text-red-500 transition-colors uppercase">{{ item.name }}</a></li>
+          {% endfor %}
         </ul>
       </div>
 

@@ -84,10 +84,10 @@ layout: default
 
       <!-- Project text and desc -->
       <div class="flex flex-col md:flex-row items-left gap-16 max-w-6xl mx-auto">
-        <div class="md:w-1/3">
-          <h2 class="text-5xl font-semibold text-gray-800 dark:text-gray-100 text-left">Projects</h2>
+        <div class="md:w-1/2">
+          <h2 class="text-5xl font-semibold text-gray-800 dark:text-gray-100 text-left">Projects. Systems. Solutions.</h2>
         </div>
-        <div class="md:w-2/3">
+        <div class="md:w-1/2">
           <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           </p>
@@ -201,6 +201,15 @@ layout: default
         </div>
         {%- endif -%}
       </div>
+
+      <div class="h-8 transparent"></div>
+
+      <!-- PROJECT BUTTONS -->
+      <div class="flex flex-col md:flex-row items-center justify-center gap-8 max-w-6xl mx-auto">
+        <button class="mt-4 md:text-xl border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold py-4 px-8 rounded-lg transition-colors tracking-wide">
+          <a href="/projects">EXPLORE PROJECTS</a>
+        </button>
+      </div>
     </div>
   </section>
 
@@ -219,144 +228,8 @@ layout: default
     }
   </style>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const trackDesktop = document.querySelector('.carousel-track-desktop');
-      const trackMobile = document.querySelector('.carousel-track-mobile');
-      const prevButton = document.querySelector('.carousel-prev');
-      const nextButton = document.querySelector('.carousel-next');
-      const indicatorsDesktop = document.querySelectorAll('.carousel-indicator-desktop');
-      const indicatorsMobile = document.querySelectorAll('.carousel-indicator-mobile');
-      const slidesDesktop = document.querySelectorAll('.carousel-slide-desktop');
-      const slidesMobile = document.querySelectorAll('.carousel-slide-mobile');
-      const container = document.querySelector('.carousel-container');
+  <!-- carousel javascript -->
+  <script src="{{ '/assets/js/carousel.js' | relative_url }}"></script>
 
-      let currentIndexDesktop = 0;
-      let currentIndexMobile = 0;
-      const totalSlidesDesktop = slidesDesktop.length;
-      const totalSlidesMobile = slidesMobile.length;
 
-      function isMobile() {
-        return window.innerWidth < 768;
-      }
-
-      function updateCarousel() {
-        if (isMobile()) {
-          if (trackMobile) {
-            trackMobile.style.transform = `translateX(-${currentIndexMobile * 100}%)`;
-          }
-          indicatorsMobile.forEach((indicator, index) => {
-            if (index === currentIndexMobile) {
-              indicator.classList.add('active');
-            } else {
-              indicator.classList.remove('active');
-            }
-          });
-        } else {
-          if (trackDesktop) {
-            trackDesktop.style.transform = `translateX(-${currentIndexDesktop * 100}%)`;
-          }
-          indicatorsDesktop.forEach((indicator, index) => {
-            if (index === currentIndexDesktop) {
-              indicator.classList.add('active');
-            } else {
-              indicator.classList.remove('active');
-            }
-          });
-        }
-      }
-
-      if (prevButton) {
-        prevButton.addEventListener('click', function() {
-          if (isMobile()) {
-            currentIndexMobile = (currentIndexMobile - 1 + totalSlidesMobile) % totalSlidesMobile;
-          } else {
-            currentIndexDesktop = (currentIndexDesktop - 1 + totalSlidesDesktop) % totalSlidesDesktop;
-          }
-          updateCarousel();
-        });
-      }
-
-      if (nextButton) {
-        nextButton.addEventListener('click', function() {
-          if (isMobile()) {
-            currentIndexMobile = (currentIndexMobile + 1) % totalSlidesMobile;
-          } else {
-            currentIndexDesktop = (currentIndexDesktop + 1) % totalSlidesDesktop;
-          }
-          updateCarousel();
-        });
-      }
-
-      indicatorsDesktop.forEach((indicator, index) => {
-        indicator.addEventListener('click', function() {
-          currentIndexDesktop = index;
-          updateCarousel();
-        });
-      });
-
-      indicatorsMobile.forEach((indicator, index) => {
-        indicator.addEventListener('click', function() {
-          currentIndexMobile = index;
-          updateCarousel();
-        });
-      });
-
-      // Touch/swipe mobile functionality
-      let touchStartX = 0;
-      let touchEndX = 0;
-      let touchStartY = 0;
-      let touchEndY = 0;
-
-      container.addEventListener('touchstart', function(e) {
-        touchStartX = e.changedTouches[0].screenX;
-        touchStartY = e.changedTouches[0].screenY;
-      }, { passive: true });
-
-      container.addEventListener('touchend', function(e) {
-        touchEndX = e.changedTouches[0].screenX;
-        touchEndY = e.changedTouches[0].screenY;
-
-        const deltaX = touchEndX - touchStartX;
-        const deltaY = touchEndY - touchStartY;
-
-        // Only trigger swipe if x movement > y
-        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
-          if (isMobile()) {
-            if (deltaX < 0) {
-              currentIndexMobile = (currentIndexMobile + 1) % totalSlidesMobile;
-            } else {
-              currentIndexMobile = (currentIndexMobile - 1 + totalSlidesMobile) % totalSlidesMobile;
-            }
-          } else {
-            if (deltaX < 0) {
-              currentIndexDesktop = (currentIndexDesktop + 1) % totalSlidesDesktop;
-            } else {
-              currentIndexDesktop = (currentIndexDesktop - 1 + totalSlidesDesktop) % totalSlidesDesktop;
-            }
-          }
-          updateCarousel();
-        }
-      }, { passive: true });
-
-      // Handle window resize
-      window.addEventListener('resize', function() {
-        updateCarousel();
-      });
-
-      // Init
-      updateCarousel();
-    });
-  </script>
-
-  {% include divider.html %}
-
-  <section class="bg-white dark:bg-gray-800 flex items-center justify-center py-16">
-    <div class="text-center">
-      <h2 class="text-4xl font-semibold text-gray-800 dark:text-gray-100 mb-4 uppercase">Sponsor Us</h2>
-      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-        pls sponsor us
-      </p>
-    </div>
-  </section>
 </div>
