@@ -28,12 +28,11 @@
     <title>{{ page.title }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Electrolize&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Orbitron:wght@400..900&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link rel="stylesheet" href="/assets/css/styles.css">
     <script src="/assets/js/main.js"></script>
-    <script type="module" src="/assets/js/dist/bundle.js"></script>
 </head>
 <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
   <!-- Dark Mode Toggle Button -->
@@ -47,17 +46,7 @@
   </button>
 
   <header class="site-header" role="banner">
-    <div class="wrapper">
-        <div id="react-nav-root"></div>
-        <script>
-          // Pass Jekyll data to React
-          window.navigationData = [
-            {% for item in site.data.navigation %}
-            { name: "{{ item.name }}", link: "{{ item.link }}" }{% unless forloop.last %},{% endunless %}
-            {% endfor %}
-          ];
-        </script>
-    </div>
+    {% include navigation.html %}
   </header>
 
   <main class="page-content" aria-label="Content">
@@ -65,6 +54,8 @@
       {{ content }}
     </div>
   </main>
+
+  {% include footer.html %}
 </body>
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>

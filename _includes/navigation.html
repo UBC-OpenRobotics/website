@@ -1,11 +1,11 @@
-<nav class="bg-white w-full border-b fixed top-0 z-50" style="font-family: 'JetBrains Mono', sans-serif">
+<nav class="bg-white dark:bg-gray-800 w-full border-b border-gray-200 dark:border-gray-700 fixed top-0 z-50 transition-colors duration-200 shadow-md dark:shadow-none" style="font-family: 'JetBrains Mono', sans-serif">
   <div class="max-w-screen-xl mx-auto px-4 md:px-8">
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between py-4">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between py-1">
 
       <!-- Nav links -->
-      <ul class="flex flex-col md:flex-row md:space-x-12 space-y-4 md:space-y-0 mb-4 md:mb-0">
+      <ul class="flex flex-col md:flex-row md:space-x-12 space-y-2 md:space-y-0 mb-2 md:mb-0">
         {% for item in site.data.navigation %}
-        <li><a href="{{ item.link }}" class="text-gray-900 hover:text-red-600 font-semibold md:text-2xl">{{ item.name }}</a></li>
+        <li><a href="{{ item.link }}" class="text-gray-900 font-light dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 md:text-base transition-colors uppercase">{{ item.name }}</a></li>
         {% endfor %}
       </ul>
 
@@ -16,28 +16,28 @@
         <!-- Map pin icon -->
         <div class="relative" id="locationDropdown">
           <button onclick="toggleLocationDropdown()"
-          class="p-2 text-gray-900 hover:text-red-600 transition-colors"
+          class="p-2 text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 transition-colors"
           aria-label="Location">
           <span class="material-icons text-3xl">location_on</span>
         </button>
 
           <!-- Desktop dropdown menu -->
           <div id="dropdownMenu"
-               class="hidden md:absolute md:right-0 md:mt-2 md:w-80 md:border md:border-gray md:rounded-lg md:shadow-xl
-                      fixed inset-0 md:inset-auto bg-white z-50">
+               class="hidden md:absolute md:right-0 md:mt-2 md:w-80 md:border md:border-gray-300 dark:md:border-gray-600 md:rounded-lg md:shadow-xl
+                      fixed inset-0 md:inset-auto bg-white dark:bg-gray-800 z-50 transition-colors duration-200">
             <!-- Mobile header -->
-            <div class="md:hidden flex items-center justify-between p-4 border-b-2 border-gray-200">
-              <h3 class="text-xl font-bold text-gray-900">Our Location</h3>
-              <button onclick="toggleLocationDropdown()" class="p-1 text-gray-900 hover:text-red-600">
+            <div class="md:hidden flex items-center justify-between p-4 border-b-2 border-gray-200 dark:border-gray-700">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Our Location</h3>
+              <button onclick="toggleLocationDropdown()" class="p-1 text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500">
                 <span class="material-icons text-3xl">close</span>
               </button>
             </div>
 
             <div class="p-4 md:p-4">
               <!-- Desktop header, hidden for mobile -->
-              <h3 class="hidden md:block text-lg font-bold text-gray-900 mb-2">Our Location</h3>
+              <h3 class="hidden md:block text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">Our Location</h3>
 
-              <p class="text-sm md:text-sm text-gray-700 mb-3 mt-4 md:mt-0">
+              <p class="text-sm md:text-sm text-gray-700 dark:text-gray-300 mb-3 mt-4 md:mt-0">
                 <strong>Hennings Building Room 200</strong><br>
                 6224 Agricultural Rd #325<br>
                 Vancouver, BC V6T 1Z1
@@ -71,10 +71,10 @@
         </div>
 
         <!-- Sponsor  -->
-        <a href="https://donate.support.ubc.ca/page/20924/donate/1?transaction.dirgift=Open+Robotics+Student+Team%20G1102"
-           class="py-2 px-4 border-2 border-red-600 hover:bg-red-600 text-gray-900 hover:text-white font-bold rounded-md  transition-colors">
+        <!-- <a href="https://donate.support.ubc.ca/page/20924/donate/1?transaction.dirgift=Open+Robotics+Student+Team%20G1102"
+           class="py-2 px-4 border-2 border-red-600 hover:bg-red-600 text-red-600 hover:text-white font-bold rounded-md transition-colors uppercase">
           Sponsor
-        </a>
+        </a> -->
       </div>
 
     </div>

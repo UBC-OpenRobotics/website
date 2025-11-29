@@ -7,7 +7,10 @@ layout: default
     <h1 class="page-heading">{{ page.title }}</h1>
   {%- endif -%}
 
-  <section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
+  <section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white robotics-bg">
+    <!-- Ambient Canvas Background with Flowing Pipes -->
+    <canvas id="ambient-canvas"></canvas>
+
     <div class="text-center">
 
       <!-- OPEN ROBOTICS MAIN TEXT with Spinning Gears -->
@@ -29,7 +32,7 @@ layout: default
               </svg>
             </span>TICS
           </h1>
-          <p class="text-xl md:text-3xl text-gray-300 mt-6 tracking-wide" style="font-family: 'JetBrains Mono', sans-serif">
+          <p class="text-2xl md:text-4xl text-gray-300 font-light tracking-wide max-w-4xl mx-auto">
             Automation, Innovation, Mentorship
           </p>
         </div>
@@ -37,63 +40,77 @@ layout: default
         <!-- CTA Buttons -->
         <div class="flex flex-col md:flex-row gap-4 justify-center">
           <button class="md:text-xl bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg transition-colors tracking-wide">
-            Explore Projects
+            EXPLORE PROJECTS
           </button>
           <button class="md:text-xl border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold py-4 px-8 rounded-lg transition-colors tracking-wide">
-            Join Our Team
+            JOIN OUR TEAM
           </button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Horizontal Divider -->
-  <div class="h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent"></div>
+  {% include divider.html %}
 
-  <section class="min-h-[33vh] bg-white dark:bg-gray-800 flex items-center justify-center py-16">
+  <section class="bg-white dark:bg-gray-800 flex items-center justify-center py-16">
     <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-8 text-center">Our Team</h2>
-      <div class="flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto">
+      
+      <div class="flex flex-col md:flex-row items-center gap-16 max-w-6xl mx-auto">
         <div class="md:w-1/2">
           <img src="{{ '/assets/images/team/team-photo.jpg' | relative_url }}"
                alt="Open Robotics Team"
                class="rounded-lg shadow-lg w-full h-auto object-cover">
         </div>
         <div class="md:w-1/2">
+          <h2 class="text-5xl font-semibold text-gray-800 dark:text-gray-100 mb-4 text-left">Our team</h2>
           <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           </p>
-          <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mt-4">
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
+          <button class="mt-4 md:text-xl border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold py-4 px-8 rounded-lg transition-colors tracking-wide">
+            JOIN OUR TEAM
+          </button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Horizontal Divider -->
-  <div class="h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent"></div>
+  {% include divider.html %}
 
   {%- assign sorted_projects = site.projects | sort: "order" -%}
   {%- assign total_projects = sorted_projects | size -%}
   {%- assign slides_count = total_projects | divided_by: 3.0 | ceil -%}
 
-  <section class="min-h-[33vh] bg-gray-100 dark:bg-gray-900 flex items-center justify-center py-16">
+  <!-- PROJECT SHOWCASE -->
+
+  <section class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center py-16">
     <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-12 text-center">Projects</h2>
+
+      <!-- Project text and desc -->
+      <div class="flex flex-col md:flex-row items-left gap-16 max-w-6xl mx-auto">
+        <div class="md:w-1/2">
+          <h2 class="text-5xl font-semibold text-gray-800 dark:text-gray-100 text-left">Projects. Systems. Solutions.</h2>
+        </div>
+        <div class="md:w-1/2">
+          <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+        </div>
+      </div>
+
+      <div class="h-16 transparent"></div>
 
       <!-- Carousel Container -->
-      <div class="relative max-w-7xl mx-auto">
-        <div class="carousel-container overflow-hidden px-12">
-          <div class="carousel-track flex transition-transform duration-500 ease-in-out">
-
+      <div class="relative max-w-6xl mx-auto">
+        <div class="carousel-container overflow-hidden px-4 md:px-0">
+          <!-- Desktop: 3 cards per slide -->
+          <div class="carousel-track-desktop hidden md:flex transition-transform duration-500 ease-in-out">
             {%- for i in (0..slides_count) -%}
               {%- assign slide_index = i | times: 3 -%}
               {%- assign slide_projects = sorted_projects | slice: slide_index, 3 -%}
 
               {%- if slide_projects.size > 0 -%}
-              <!-- Slide {{ i }} -->
-              <div class="carousel-slide min-w-full flex gap-6 px-2">
+              <!-- Desktop Slide {{ i }} -->
+              <div class="carousel-slide-desktop min-w-full flex gap-6">
                 {%- for project in slide_projects -%}
                 <div class="flex-1 min-w-0">
                   <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden h-full">
@@ -102,7 +119,7 @@ layout: default
                          class="w-full h-48 object-cover">
                     <div class="p-4">
                       <a href="{{ project.url | relative_url }}"
-                         class="text-xl font-bold text-gray-800 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 transition-colors block">
+                         class="text-xl font-semibold text-gray-800 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 transition-colors block">
                         {{ project.title }}
                       </a>
                       <p class="text-gray-600 dark:text-gray-300 mt-3 text-sm leading-relaxed line-clamp-3">
@@ -128,40 +145,80 @@ layout: default
               </div>
               {%- endif -%}
             {%- endfor -%}
+          </div>
 
+          <!-- Mobile: 1 card per slide -->
+          <div class="carousel-track-mobile flex md:hidden transition-transform duration-500 ease-in-out">
+            {%- for project in sorted_projects -%}
+            <!-- Mobile Slide -->
+            <div class="carousel-slide-mobile min-w-full px-2">
+              <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden h-full max-w-sm mx-auto">
+                <img src="{{ project.thumbnail | relative_url }}"
+                     alt="{{ project.title }}"
+                     class="w-full h-48 object-cover">
+                <div class="p-4">
+                  <a href="{{ project.url | relative_url }}"
+                     class="text-xl font-semibold text-gray-800 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 transition-colors block">
+                    {{ project.title }}
+                  </a>
+                  <p class="text-gray-600 dark:text-gray-300 mt-3 text-sm leading-relaxed line-clamp-3">
+                    {{ project.description }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            {%- endfor -%}
           </div>
         </div>
 
-        <!-- Navigation Arrows -->
+        <!-- Navigation Arrows (hidden on mobile) -->
         {%- if slides_count > 1 -%}
-        <button class="carousel-prev absolute left-0 top-1/2 -translate-y-1/2 bg-black dark:bg-gray-700 bg-opacity-50 dark:bg-opacity-75 hover:bg-opacity-75 dark:hover:bg-opacity-90 text-white p-3 rounded-full transition-all">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button class="carousel-prev hidden md:block absolute -left-12 top-1/2 -translate-y-1/2 hover:text-red-600 dark:text-white text-gray-600 p-3 rounded-full transition-all">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
           </svg>
         </button>
-        <button class="carousel-next absolute right-0 top-1/2 -translate-y-1/2 bg-black dark:bg-gray-700 bg-opacity-50 dark:bg-opacity-75 hover:bg-opacity-75 dark:hover:bg-opacity-90 text-white p-3 rounded-full transition-all">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button class="carousel-next hidden md:block absolute -right-12 top-1/2 -translate-y-1/2 hover:text-red-600 dark:text-white text-gray-600 p-3 rounded-full transition-all">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
           </svg>
         </button>
 
         <!-- Carousel Indicators -->
-        <div class="flex justify-center mt-6 gap-2">
+        <!-- Desktop indicators -->
+        <div class="hidden md:flex justify-center mt-6 gap-2">
           {%- for i in (0..slides_count) -%}
             {%- assign slide_index = i | times: 3 -%}
             {%- assign slide_projects = sorted_projects | slice: slide_index, 3 -%}
             {%- if slide_projects.size > 0 -%}
-            <button class="carousel-indicator w-3 h-3 rounded-full bg-gray-400 hover:bg-gray-600 transition-all" data-index="{{ i }}"></button>
+            <button class="carousel-indicator-desktop w-3 h-3 rounded-full bg-gray-400 hover:bg-gray-600 transition-all" data-index="{{ i }}"></button>
             {%- endif -%}
           {%- endfor -%}
         </div>
+
+        <!-- Mobile indicators -->
+        <div class="flex md:hidden justify-center mt-6 gap-2">
+          {%- for project in sorted_projects -%}
+          <button class="carousel-indicator-mobile w-3 h-3 rounded-full bg-gray-400 hover:bg-gray-600 transition-all" data-index="{{ forloop.index0 }}"></button>
+          {%- endfor -%}
+        </div>
         {%- endif -%}
+      </div>
+
+      <div class="h-8 transparent"></div>
+
+      <!-- PROJECT BUTTONS -->
+      <div class="flex flex-col md:flex-row items-center justify-center gap-8 max-w-6xl mx-auto">
+        <button class="mt-4 md:text-xl border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold py-4 px-8 rounded-lg transition-colors tracking-wide">
+          <a href="/projects">EXPLORE PROJECTS</a>
+        </button>
       </div>
     </div>
   </section>
 
   <style>
-    .carousel-indicator.active {
+    .carousel-indicator-desktop.active,
+    .carousel-indicator-mobile.active {
       background-color: #DC2626;
       transform: scale(1.2);
     }
@@ -174,117 +231,11 @@ layout: default
     }
   </style>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const track = document.querySelector('.carousel-track');
-      const prevButton = document.querySelector('.carousel-prev');
-      const nextButton = document.querySelector('.carousel-next');
-      const indicators = document.querySelectorAll('.carousel-indicator');
-      const slides = document.querySelectorAll('.carousel-slide');
-      let currentIndex = 0;
-      const totalSlides = slides.length;
+  <!-- carousel javascript -->
+  <script src="{{ '/assets/js/carousel.js' | relative_url }}"></script>
 
-      if (totalSlides === 0) return;
+  <!-- ambient background javascript -->
+  <script src="{{ '/assets/js/ambient-background.js' | relative_url }}"></script>
 
-      function updateCarousel() {
-        track.style.transform = `translateX(-${currentIndex * 100}%)`;
-        indicators.forEach((indicator, index) => {
-          if (index === currentIndex) {
-            indicator.classList.add('active');
-          } else {
-            indicator.classList.remove('active');
-          }
-        });
-      }
 
-      if (prevButton) {
-        prevButton.addEventListener('click', function() {
-          currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-          updateCarousel();
-        });
-      }
-
-      if (nextButton) {
-        nextButton.addEventListener('click', function() {
-          currentIndex = (currentIndex + 1) % totalSlides;
-          updateCarousel();
-        });
-      }
-
-      indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', function() {
-          currentIndex = index;
-          updateCarousel();
-        });
-      });
-
-      // Initialize first indicator as active
-      updateCarousel();
-    });
-  </script>
-
-  <!-- Horizontal Divider -->
-  <div class="h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent"></div>
-  
-  <section class="min-h-[20vh] bg-white dark:bg-gray-800 flex items-center justify-center">
-    <div class="text-center">
-      <h2 class="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">Sponsor Us</h2>
-      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-        pls sponsor us
-      </p>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 dark:bg-black text-white py-12">
-    <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-
-        <!-- About Section -->
-        <div>
-          <h3 class="text-xl font-bold mb-4 text-red-500">UBC Open Robotics</h3>
-          <p class="text-gray-300 leading-relaxed">
-            Automation, Innovation, Mentorship
-          </p>
-        </div>
-
-        <!-- Quick Links -->
-        <div>
-          <h3 class="text-xl font-bold mb-4 text-red-500">Quick Links</h3>
-          <ul class="space-y-2">
-            <li><a href="{{ '/projects' | relative_url }}" class="text-gray-300 hover:text-red-500 transition-colors">Projects</a></li>
-            <li><a href="{{ '/team' | relative_url }}" class="text-gray-300 hover:text-red-500 transition-colors">Team</a></li>
-            <li><a href="{{ '/contact' | relative_url }}" class="text-gray-300 hover:text-red-500 transition-colors">Contact</a></li>
-          </ul>
-        </div>
-
-        <!-- Connect -->
-        <div>
-          <h3 class="text-xl font-bold mb-4 text-red-500">Connect With Us</h3>
-          <div class="flex gap-4">
-            <a href="https://github.com/UBC-OpenRobotics" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-red-500 transition-colors">
-              <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-              </svg>
-            </a>
-            <a href="https://www.instagram.com/ubc.openrobotics/" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-red-500 transition-colors">
-              <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-              </svg>
-            </a>
-          </div>
-          <div class="mt-4">
-            <p class="text-gray-300">Email: <a href="mailto:contact@ubcopenrobotics.ca" class="hover:text-red-500 transition-colors">contact@ubcopenrobotics.ca</a></p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Copyright -->
-      <div class="border-t border-gray-700 pt-8 text-center">
-        <p class="text-gray-400">
-          &copy; {{ 'now' | date: "%Y" }} UBC Open Robotics. All rights reserved.
-        </p>
-      </div>
-    </div>
-  </footer>
 </div>
