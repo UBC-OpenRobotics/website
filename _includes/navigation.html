@@ -1,18 +1,36 @@
 <nav class="bg-white dark:bg-gray-800 w-full border-b border-gray-200 dark:border-gray-700 fixed top-0 z-50 transition-colors duration-200 shadow-md dark:shadow-none" style="font-family: 'JetBrains Mono', sans-serif">
   <div class="max-w-screen-xl mx-auto px-4 md:px-8">
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between py-1">
+    <div class="flex items-center justify-between py-1">
 
-      <!-- Nav links -->
-      <ul class="flex flex-col md:flex-row md:space-x-12 space-y-2 md:space-y-0 mb-2 md:mb-0">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <a href="/" class="flex items-center">
+          <img src="/assets/logos/team/logo.png"
+               alt="Open Robotics Logo"
+               class="h-12 w-12 dark:hidden">
+          <img src="/assets/logos/team/logo-dark.png"
+               alt="Open Robotics Logo"
+               class="h-12 w-12 hidden dark:block">
+        </a>
+      </div>
+
+      <!-- Desktop nav links  -->
+      <ul class="hidden md:flex md:space-x-12 md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
         {% for item in site.data.navigation %}
         <li><a href="{{ item.link }}" class="text-gray-900 font-light dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 md:text-base transition-colors uppercase">{{ item.name }}</a></li>
         {% endfor %}
       </ul>
 
-      <!-- Donate button + map pin -->
+      <!-- Mobile menu button & location -->
       <div class="flex items-center space-x-4">
-        
-        
+
+        <!-- Mobile menu button -->
+        <button onclick="toggleMobileMenu()"
+                class="md:hidden p-2 text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+                aria-label="Toggle menu">
+          <span class="material-icons text-3xl">menu</span>
+        </button>
+
         <!-- Map pin icon -->
         <div class="relative" id="locationDropdown">
           <button onclick="toggleLocationDropdown()"
@@ -34,7 +52,7 @@
             </div>
 
             <div class="p-4 md:p-4">
-              <!-- Desktop header, hidden for mobile -->
+              <!-- Desktop header, which is hidden for mobile -->
               <h3 class="hidden md:block text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">Our Location</h3>
 
               <p class="text-sm md:text-sm text-gray-700 dark:text-gray-300 mb-3 mt-4 md:mt-0">
@@ -79,9 +97,25 @@
 
     </div>
   </div>
+
+  <!-- Mobile menu panel -->
+  <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+    <ul class="flex flex-col px-4 py-4 space-y-4">
+      {% for item in site.data.navigation %}
+      <li><a href="{{ item.link }}"
+             onclick="toggleMobileMenu()"
+             class="block text-gray-900 font-light dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 text-lg transition-colors uppercase">{{ item.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
 </nav>
 
 <script>
+  function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenu.classList.toggle('hidden');
+  }
+
   function toggleLocationDropdown() {
     const dropdown = document.getElementById('dropdownMenu');
     const backdrop = document.getElementById('modalBackdrop');
