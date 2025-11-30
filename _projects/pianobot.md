@@ -1,5 +1,5 @@
 ---
-layout: project
+layout: project-detail
 title: PianoBot
 permalink: /projects/pianobot/
 thumbnail: /assets/images/pianobot/pianobot-thumbnail.jpg
