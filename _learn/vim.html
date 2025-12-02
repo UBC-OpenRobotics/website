@@ -1,0 +1,373 @@
+---
+layout: default
+title: Learn Vim Basics
+permalink: /learn/vim/
+---
+
+<style>
+  .vim-terminal {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    min-height: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .vim-terminal.light-mode {
+    background-color: #ffffff;
+    color: #1e1e1e;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .vim-editor-wrapper {
+    display: flex;
+    padding-bottom: 40px;
+  }
+
+  .vim-line-numbers {
+    color: #858585;
+    text-align: right;
+    padding-right: 12px;
+    user-select: none;
+    min-width: 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .vim-content {
+    white-space: pre;
+    line-height: 1.5;
+    min-height: 300px;
+    outline: none;
+    flex: 1;
+    position: relative;
+  }
+
+  .vim-line {
+    position: relative;
+    min-height: 21px;
+    white-space: pre;
+  }
+
+  .vim-cursor {
+    display: inline-block;
+    background-color: #cccccc;
+    color: #1e1e1e;
+    animation: blink-cursor 1s infinite;
+    pointer-events: none;
+  }
+
+  .vim-terminal.light-mode .vim-cursor {
+    background-color: #333333;
+    color: #ffffff;
+  }
+
+  .vim-cursor.block {
+    width: 8.4px;
+    min-width: 8.4px;
+    height: 21px;
+  }
+
+  @keyframes blink-cursor {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0.3; }
+  }
+
+  .vim-status-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #007acc;
+    color: white;
+    padding: 5px 20px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .vim-command-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 5px 20px;
+    font-size: 12px;
+  }
+
+  .level-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .level-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .level-complete {
+    background-color: #10b981 !important;
+  }
+
+  .tab-button {
+    transition: all 0.2s;
+  }
+
+  .tab-button.active {
+    background-color: #007acc;
+    color: white;
+  }
+
+  .help-key {
+    display: inline-block;
+    background-color: #374151;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    margin: 0 2px;
+  }
+
+  .terminal-shell {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    padding: 20px;
+    border-radius: 8px;
+    min-height: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .terminal-output {
+    white-space: pre-wrap;
+    margin-bottom: 10px;
+  }
+
+  .terminal-prompt {
+    display: flex;
+    align-items: center;
+  }
+
+  .terminal-prompt-text {
+    color: #4ec9b0;
+    margin-right: 8px;
+  }
+
+  .terminal-input-wrapper {
+    flex: 1;
+    position: relative;
+    white-space: pre;
+    line-height: 1.5;
+    min-height: 21px;
+  }
+
+  .terminal-input {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+  }
+
+  .terminal-cursor {
+    display: inline-block;
+    width: 8.4px;
+    min-width: 8.4px;
+    height: 21px;
+    background-color: #cccccc;
+    color: #1e1e1e;
+    animation: blink-cursor 1s infinite;
+  }
+
+  .hidden-vim {
+    display: none;
+  }
+</style>
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 pt-32 pb-16">
+  <div class="container mx-auto px-4 max-w-8xl">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-4">
+        Learn Vim Interactively
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+        Master the essential vim commands through interactive lessons and practice
+      </p>
+    </div>
+
+    <!-- Mode Tabs -->
+    <div class="flex justify-center mb-8 gap-4">
+      <button id="levels-tab" class="tab-button active px-8 py-3 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white">
+        LEVELS MODE
+      </button>
+      <button id="sandbox-tab" class="tab-button px-8 py-3 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white">
+        SANDBOX MODE
+      </button>
+    </div>
+
+    <!-- Levels Mode -->
+    <div id="levels-mode" class="mode-content">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mb-8">
+        <!-- <h2 class="text-3xl font-semibold text-gray-900 dark:text-white mb-6">Choose a Level</h2> -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="levels-grid">
+          <!-- Levels will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Level Viewer -->
+      <div id="level-viewer" class="hidden">
+        <div class="flex flex-col md:flex-row gap-4 mx-auto">
+
+          <div class="md:w-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mb-4">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-3xl font-bold text-gray-900 dark:text-white" id="level-title"></h2>
+              <button id="back-to-levels" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                Back to Levels
+              </button>
+            </div>
+  
+            <div class="mb-6">
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Objective:</h3>
+              <p class="text-gray-700 dark:text-gray-300" id="level-objective"></p>
+            </div>
+  
+            <div class="mb-6">
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Instructions:</h3>
+              <div class="text-gray-700 dark:text-white" id="level-instructions"></div>
+            </div>
+  
+            <div class="mb-6">
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Target Output:</h3>
+              <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                <pre class="text-sm" id="target-output"></pre>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Each levels's terminal and vim -->
+          <div class="md:w-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Terminal:</h3>
+  
+            <!-- Shell -->
+            <div id="shell-terminal-level" class="terminal-shell">
+              <div id="terminal-output-level" class="terminal-output">Type 'vim <span id="level-filename">practice.txt</span>' to start editing</div>
+              <div class="terminal-prompt">
+                <span class="terminal-prompt-text">user@obot:~$</span>
+                <div id="terminal-input-wrapper-level" class="terminal-input-wrapper"></div>
+                <input type="text" id="terminal-input-level" class="terminal-input" autocomplete="off" spellcheck="false">
+              </div>
+            </div>
+  
+            <!-- Vim -->
+            <div id="vim-terminal-level" class="vim-terminal hidden-vim">
+              <div class="vim-editor-wrapper">
+                <div id="vim-line-numbers-level" class="vim-line-numbers"></div>
+                <div id="vim-content-level" class="vim-content" tabindex="0"></div>
+              </div>
+              <div id="vim-status-level" class="vim-status-bar">
+                <span id="vim-mode-level">-- NORMAL --</span>
+                <span id="vim-position-level">1,1</span>
+              </div>
+            </div>
+            <div class="mt-4 flex gap-4">
+              <button id="check-answer" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold">
+                Check Answer
+              </button>
+              <button id="reset-level" class="px-6 py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 font-semibold">
+                Reset
+              </button>
+              <button id="show-hint" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold">
+                Show Hint
+              </button>
+            </div>
+            <div id="hint-box" class="hidden mt-4 p-4 bg-blue-50 dark:bg-blue-900 border-l-4 border-blue-500 rounded">
+              <p class="text-blue-900 dark:text-blue-100" id="hint-text"></p>
+            </div>
+            <div id="result-box" class="hidden mt-4 p-4 rounded"></div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+    </div>
+
+    <!-- Sandbox Mode -->
+    <div id="sandbox-mode" class="mode-content hidden">
+      <div class="flex flex-col md:flex-row gap-4 mx-auto">
+
+        <div class="md:w-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mb-4">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Vim Sandbox</h2>
+          <p class="text-gray-700 dark:text-gray-300 mb-6">
+            Practice vim commands freely. Use this sandbox to experiment with any vim commands you'd like to try.
+          </p>
+  
+          <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg mb-6">
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Quick Reference:</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-700 dark:text-gray-300">
+              <div><span class="help-key">vim filename</span> - Open vim</div>
+              <div><span class="help-key">:w</span> - Save file (in vim)</div>
+              <div><span class="help-key">:q</span> - Quit vim</div>
+              <div><span class="help-key">:wq</span> - Save and quit</div>
+              <div><span class="help-key">i</span> - Insert mode</div>
+              <div><span class="help-key">Esc</span> - Normal mode</div>
+              <div><span class="help-key">h j k l</span> - Move cursor</div>
+              <div><span class="help-key">x</span> - Delete character</div>
+              <div><span class="help-key">dd</span> - Delete line</div>
+              <div><span class="help-key">yy</span> - Copy line</div>
+              <div><span class="help-key">p</span> - Paste</div>
+              <div><span class="help-key">u</span> - Undo</div>
+              <div><span class="help-key">w</span> - Next word</div>
+              <div><span class="help-key">b</span> - Previous word</div>
+              <div><span class="help-key">0</span> - Start of line</div>
+              <div><span class="help-key">$</span> - End of line</div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="md:w-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Terminal:</h3>
+  
+          <!-- Shell Terminal -->
+          <div id="shell-terminal-sandbox" class="terminal-shell">
+            <div id="terminal-output-sandbox" class="terminal-output">Type 'vim filename.txt' to start editing (e.g., vim notes.txt)</div>
+            <div class="terminal-prompt">
+              <span class="terminal-prompt-text">user@obot:~$</span>
+              <div id="terminal-input-wrapper-sandbox" class="terminal-input-wrapper"></div>
+              <input type="text" id="terminal-input-sandbox" class="terminal-input" autocomplete="off" spellcheck="false">
+            </div>
+          </div>
+  
+          <!-- Vim Editor (hidden initially) -->
+          <div id="vim-terminal-sandbox" class="vim-terminal hidden-vim">
+            <div class="vim-editor-wrapper">
+              <div id="vim-line-numbers-sandbox" class="vim-line-numbers"></div>
+              <div id="vim-content-sandbox" class="vim-content" tabindex="0"></div>
+            </div>
+            <div id="vim-status-sandbox" class="vim-status-bar">
+              <span id="vim-mode-sandbox">-- NORMAL --</span>
+              <span id="vim-position-sandbox">1,1</span>
+            </div>
+          </div>
+          <div class="mt-4">
+            <button id="reset-sandbox" class="px-6 py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 font-semibold">
+              Reset Terminal
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ '/assets/js/vim.js' | relative_url }}"></script>
