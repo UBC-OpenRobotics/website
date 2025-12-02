@@ -40,6 +40,9 @@ collections:
   projects:
     output: true
     permalink: /projects/:name/
+  learn:
+    output: true
+    permalink: /learn/:name/
 
 
 # Exclude from processing.

@@ -1,0 +1,21 @@
+<!-- Shell Terminal -->
+<div id="shell-terminal" class="terminal-shell">
+  <div id="terminal-output" class="terminal-output">Type 'vim {{ include.filename }}' to start editing</div>
+  <div class="terminal-prompt">
+    <span class="terminal-prompt-text">user@obot:~$</span>
+    <div id="terminal-input-wrapper" class="terminal-input-wrapper"></div>
+    <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false">
+  </div>
+</div>
+
+<!-- Vim Editor (hidden initially) -->
+<div id="vim-terminal" class="vim-terminal hidden-vim">
+  <div class="vim-editor-wrapper">
+    <div id="vim-line-numbers" class="vim-line-numbers"></div>
+    <div id="vim-content" class="vim-content" tabindex="0"></div>
+  </div>
+  <div id="vim-status" class="vim-status-bar">
+    <span id="vim-mode">-- NORMAL --</span>
+    <span id="vim-position">1,1</span>
+  </div>
+</div>
