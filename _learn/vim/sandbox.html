@@ -1,0 +1,92 @@
+---
+layout: default
+title: Vim Sandbox - Practice Freely
+permalink: /learn/vim/sandbox
+---
+
+<link rel="stylesheet" href="{{ '/assets/css/vim.css' | relative_url }}">
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 pt-32 pb-16">
+  <div class="container mx-auto px-4 max-w-7xl">
+    <div class="flex flex-col md:flex-row gap-4">
+
+      <div class="md:w-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mb-4">
+        <div class="flex justify-between items-center mb-6">
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Vim Sandbox</h1>
+          <a href="/learn/vim/" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+            Back to Levels
+          </a>
+        </div>
+
+        <p class="text-gray-700 dark:text-gray-300 mb-6">
+          Practice vim commands freely. Use this sandbox to experiment with any vim commands you'd like to try.
+        </p>
+
+        <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg mb-6">
+          <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Quick Reference:</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-700 dark:text-gray-300">
+            <div><span class="help-key">vim filename</span> - Open vim</div>
+            <div><span class="help-key">:w</span> - Save file (in vim)</div>
+            <div><span class="help-key">:q</span> - Quit vim</div>
+            <div><span class="help-key">:wq</span> - Save and quit</div>
+            <div><span class="help-key">i</span> - Insert mode</div>
+            <div><span class="help-key">Esc</span> - Normal mode</div>
+            <div><span class="help-key">h j k l</span> - Move cursor</div>
+            <div><span class="help-key">x</span> - Delete character</div>
+            <div><span class="help-key">dd</span> - Delete line</div>
+            <div><span class="help-key">yy</span> - Copy line</div>
+            <div><span class="help-key">p</span> - Paste</div>
+            <div><span class="help-key">u</span> - Undo</div>
+            <div><span class="help-key">w</span> - Next word</div>
+            <div><span class="help-key">b</span> - Previous word</div>
+            <div><span class="help-key">0</span> - Start of line</div>
+            <div><span class="help-key">$</span> - End of line</div>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <a href="/learn/vim/level-1" class="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold">
+            Start Level 1 →
+          </a>
+        </div>
+      </div>
+
+      <!-- Terminal -->
+      <div class="md:w-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Terminal:</h3>
+
+        <div id="shell-terminal-sandbox" class="terminal-shell">
+          <div id="terminal-output-sandbox" class="terminal-output">Type 'vim filename.txt' to start editing (e.g., vim notes.txt)</div>
+          <div class="terminal-prompt">
+            <span class="terminal-prompt-text">user@obot:~$</span>
+            <div id="terminal-input-wrapper-sandbox" class="terminal-input-wrapper"></div>
+            <input type="text" id="terminal-input-sandbox" class="terminal-input" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+
+        <div id="vim-terminal-sandbox" class="vim-terminal hidden-vim">
+          <div class="vim-editor-wrapper">
+            <div id="vim-line-numbers-sandbox" class="vim-line-numbers"></div>
+            <div id="vim-content-sandbox" class="vim-content" tabindex="0"></div>
+          </div>
+          <div id="vim-status-sandbox" class="vim-status-bar">
+            <span id="vim-mode-sandbox">-- NORMAL --</span>
+            <span id="vim-position-sandbox">1,1</span>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <button id="reset-sandbox" class="px-6 py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 font-semibold">
+            Reset Terminal
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="{{ '/assets/js/vim-level.js' | relative_url }}"></script>
+<script>
+  initSandbox();
+</script>

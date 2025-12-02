@@ -1,0 +1,149 @@
+
+  .vim-terminal {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    min-height: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .vim-editor-wrapper {
+    display: flex;
+    padding-bottom: 40px;
+  }
+
+  .vim-line-numbers {
+    color: #858585;
+    text-align: right;
+    padding-right: 12px;
+    user-select: none;
+    min-width: 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .vim-content {
+    white-space: pre;
+    line-height: 1.5;
+    min-height: 300px;
+    outline: none;
+    flex: 1;
+    position: relative;
+  }
+
+  .vim-line {
+    position: relative;
+    min-height: 21px;
+    white-space: pre;
+  }
+
+  .vim-cursor {
+    display: inline-block;
+    background-color: #cccccc;
+    color: #1e1e1e;
+    animation: blink-cursor 1s infinite;
+    pointer-events: none;
+  }
+
+  .vim-cursor.block {
+    width: 8.4px;
+    min-width: 8.4px;
+    height: 21px;
+  }
+
+  @keyframes blink-cursor {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0.3; }
+  }
+
+  .vim-status-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #007acc;
+    color: white;
+    padding: 5px 20px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .help-key {
+    display: inline-block;
+    background-color: #374151;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    margin: 0 2px;
+  }
+
+  .terminal-shell {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    padding: 20px;
+    border-radius: 8px;
+    min-height: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .terminal-output {
+    white-space: pre-wrap;
+    margin-bottom: 10px;
+  }
+
+  .terminal-prompt {
+    display: flex;
+    align-items: center;
+  }
+
+  .terminal-prompt-text {
+    color: #4ec9b0;
+    margin-right: 8px;
+  }
+
+  .terminal-input-wrapper {
+    flex: 1;
+    position: relative;
+    white-space: pre;
+    line-height: 1.5;
+    min-height: 21px;
+  }
+
+  .terminal-input {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+  }
+
+  .terminal-cursor {
+    display: inline-block;
+    width: 8.4px;
+    min-width: 8.4px;
+    height: 21px;
+    background-color: #cccccc;
+    color: #1e1e1e;
+    animation: blink-cursor 1s infinite;
+  }
+
+  .hidden-vim {
+    display: none;
+  }
+
+  .level-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .level-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
