@@ -4,8 +4,41 @@ layout: default
 
 <div class="project-detail-page bg-white dark:bg-gray-900 min-h-screen">
   <div class="container mx-auto px-4 py-16">
+
+    <!-- Breadcrumb nav to parent project -->
+    {%- assign page_path_parts = page.path | split: "/" -%}
+    {%- assign parent_dir = page_path_parts | slice: 0, 2 | join: "/" -%}
+    {%- assign parent_filename = page_path_parts[1] | append: ".md" -%}
+    {%- assign parent_path = parent_dir | append: "/" | append: parent_filename -%}
+    {%- assign parent_project = site.projects | where: "path", parent_path | where: "layout", "project-main" | first -%}
+
+    <!-- {%- if parent_project -%}
+    <div class="max-w-4xl mx-auto mb-4">
+      <nav class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+        <a href="{{ parent_project.url | relative_url }}" class="flex items-center hover:text-red-600 dark:hover:text-red-400 transition-colors">
+          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          {{ parent_project.title }}
+        </a>
+        <span class="mx-2">/</span>
+        <span class="text-gray-800 dark:text-gray-200">{{ page.title }}</span>
+      </nav>
+    </div>
+    {%- endif -%} -->
+
     <div class="max-w-4xl mx-auto mb-6 mt-6">
+      {%- if parent_project -%}
+      <h1 class="text-center text-4xl font-bold  md:text-5xl text-gray-800 dark:text-gray-100 mb-6">
+        <a href="{{ parent_project.url | relative_url }}" class="text-2xl font-semibold md:text-3xl text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors">
+          {{ parent_project.title }}
+        </a>
+        <span class="text-2xl font-semibold md:text-3xl text-gray-600 dark:text-gray-400"> / </span>
+        {{ page.title }}
+      </h1>
+      {%- else -%}
       <h1 class="text-center text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-6">{{ page.title }}</h1>
+      {%- endif -%}
     </div>
 
     <!-- {%- if page.thumbnail -%}

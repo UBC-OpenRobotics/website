@@ -1,10 +1,9 @@
 ---
 layout: project-detail
-title: RoboCup - Computer Vision
+title: Computer Vision
 permalink: /projects/robocup/computer-vision/
 thumbnail: /assets/images/robocup/robocup-thumbnail.jpg
 description: Our journey in the RoboCup competition, from initial planning to competing on the international stage.
-order: 2
 milestones:
   - date: "2020-06-01"
     title: "Project Kickoff"
