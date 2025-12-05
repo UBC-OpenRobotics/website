@@ -76,7 +76,8 @@ layout: default
 
   {% include divider.html %}
 
-  {%- assign sorted_projects = site.projects | sort: "order" -%}
+  {%- assign all_projects = site.projects | sort: "order" -%}
+  {%- assign sorted_projects = all_projects | where_exp: "item", "item.layout == 'project-main'" -%}
   {%- assign total_projects = sorted_projects | size -%}
   {%- assign slides_count = total_projects | divided_by: 3.0 | ceil -%}
 

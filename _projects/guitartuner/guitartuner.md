@@ -1,5 +1,5 @@
 ---
-layout: project
+layout: project-main
 title: Guitar Tuner
 permalink: /projects/guitartuner/
 thumbnail: /assets/images/guitartuner/guitartuner-thumbnail.jpg

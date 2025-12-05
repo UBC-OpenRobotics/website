@@ -1,7 +1,7 @@
 ---
 layout: project-detail
-title: RoboCup
-permalink: /projects/robocup/
+title: RoboCup - Drivetrain
+permalink: /projects/robocup/drivetrain/
 thumbnail: /assets/images/robocup/robocup-thumbnail.jpg
 description: Our journey in the RoboCup competition, from initial planning to competing on the international stage.
 order: 2
