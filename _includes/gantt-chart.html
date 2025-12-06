@@ -35,9 +35,9 @@
 
   <div class="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 overflow-visible">
     <!-- Calculate time span in days with buffer -->
-    <!-- Add 2 months buffer on each side (approximately 60 days) -->
+    <!-- Add 2 months buffer on each side (approximately 120 days) -->
     <!--  60 days * 86400 seconds -->
-    {%- assign buffer_seconds = 5184000 -%}
+    {%- assign buffer_seconds = 15184000 -%}
     {%- assign buffered_min_date = min_date | minus: buffer_seconds -%}
     {%- assign buffered_max_date = max_date | plus: buffer_seconds -%}
     {%- assign time_span = buffered_max_date | minus: buffered_min_date | divided_by: 86400 | plus: 1 -%}
@@ -78,7 +78,7 @@
             <div class="h-24 px-4 flex items-center border-b border-gray-100 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
               <a href="{{ subproject.url | relative_url }}" class="group flex items-center gap-3 w-full">
                 <div class="flex-1 min-w-0">
-                  <div class="text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">
+                  <div class="text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors truncate">
                     {{ subproject.title }}
                   </div>
                   <div class="text-xs text-gray-500 dark:text-gray-500 mt-0.5">
@@ -133,8 +133,11 @@
 
           <!-- Project timeline rows -->
           <div style="overflow: visible;">
+            {%- assign color_scheme = "red,orange,amber,rose,pink" | split: "," -%}
             {%- for subproject in subprojects -%}
               {%- if subproject.milestones and subproject.milestones.size > 0 -%}
+              {%- assign color_index = forloop.index0 | modulo: color_scheme.size -%}
+              {%- assign project_color = color_scheme[color_index] -%}
               <div class="h-24 border-b border-gray-100 dark:border-gray-800 relative hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors" style="overflow: visible;">
                 <div class="absolute inset-0 flex items-center" style="overflow: visible;">
                   <!-- Month grid background -->
@@ -178,7 +181,7 @@
                       {%- assign end_percent = last_offset | times: 100.0 | divided_by: time_span | divided_by: 86400 -%}
                       {%- assign width_percent = end_percent | minus: start_percent -%}
 
-                      <div class="absolute h-1.5 bg-blue-500 dark:bg-blue-600 rounded-full"
+                      <div class="absolute h-1.5 bg-{{ project_color }}-500 dark:bg-{{ project_color }}-600 rounded-full"
                            style="left: {{ start_percent }}%; width: {{ width_percent }}%; top: 50%; transform: translateY(-50%);"></div>
                     {%- endif -%}
 
@@ -213,7 +216,7 @@
                         </div>
 
                         <!-- Milestone dot -->
-                        <div class="w-3 h-3 rounded-full bg-blue-600 dark:bg-blue-500 border-2 border-white dark:border-gray-900 shadow-sm cursor-pointer transition-all hover:scale-125 hover:shadow-md" style="z-index: 20;"></div>
+                        <div class="w-3 h-3 rounded-full bg-{{ project_color }}-600 dark:bg-{{ project_color }}-500 border-2 border-white dark:border-gray-900 shadow-sm cursor-pointer transition-all hover:scale-125 hover:shadow-md" style="z-index: 20;"></div>
                       </a>
                     {%- endfor -%}
                   </div>
@@ -230,11 +233,11 @@
     <div class="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-3 px-6">
       <div class="flex items-center gap-6 text-xs">
         <div class="flex items-center gap-2">
-          <div class="w-3 h-3 rounded-full bg-blue-600 dark:bg-blue-500 border-2 border-white dark:border-gray-900"></div>
+          <div class="w-3 h-3 rounded-full bg-red-600 dark:bg-red-500 border-2 border-white dark:border-gray-900"></div>
           <span class="text-gray-600 dark:text-gray-400">Milestone</span>
         </div>
         <div class="flex items-center gap-2">
-          <div class="w-12 h-1.5 bg-blue-500 dark:bg-blue-600 rounded-full"></div>
+          <div class="w-12 h-1.5 bg-red-500 dark:bg-red-600 rounded-full"></div>
           <span class="text-gray-600 dark:text-gray-400">Project Duration</span>
         </div>
         <div class="flex items-center gap-2 ml-auto">
