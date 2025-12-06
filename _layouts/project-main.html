@@ -50,6 +50,9 @@ layout: default
     </div>
     {%- endif -%}
 
+    <!-- Gantt Chart -->
+    {% include gantt-chart.html %}
+
     {%- if content != "" -%}
     <div class="prose prose-lg dark:prose-invert max-w-4xl mx-auto text-gray-800 dark:text-gray-200">
       {{ content }}

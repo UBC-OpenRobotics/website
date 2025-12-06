@@ -20,12 +20,12 @@ milestones:
     description: "Competed in our first RoboCup tournament and learned valuable lessons about robot coordination and real-time decision making under pressure."
     image: "/assets/images/robocup/milestone3.jpg"
 
-  - date: "2050-08-10"
+  - date: "2025-08-10"
     title: "First Competition"
     description: "Competed in our first RoboCup tournament and learned valuable lessons about robot coordination and real-time decision making under pressure."
     image: "/assets/images/robocup/milestone4.jpg"
 
-  - date: "2050-08-10"
+  - date: "2026-08-10"
     title: " Competition"
     description: "Competed in our first RoboCup tournament and learned valuable lessons about robot coordination and real-time decision making under pressure."
     image: "/assets/images/robocup/milestone4.jpg"
