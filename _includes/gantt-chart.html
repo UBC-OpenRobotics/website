@@ -1,0 +1,650 @@
+<!--
+  Gantt Chart for Sub-Project Milestones
+
+  This component aggregates all milestones from sub-projects and displays them
+  in a horizontal Gantt chart format, grouped by sub-project.
+-->
+
+{%- assign page_dir = page.path | remove: page.name -%}
+{%- assign subprojects = site.projects | where_exp: "item", "item.path contains page_dir" | where_exp: "item", "item.layout == 'project-detail'" | sort: "order" -%}
+
+<!-- Collect all milestones and find date range -->
+{%- assign all_milestones = "" | split: "" -%}
+{%- assign min_date = nil -%}
+{%- assign max_date = nil -%}
+
+{%- for subproject in subprojects -%}
+  {%- if subproject.milestones -%}
+    {%- for milestone in subproject.milestones -%}
+      {%- assign milestone_with_project = milestone | merge: {"project_title": subproject.title, "project_url": subproject.url} -%}
+      {%- assign all_milestones = all_milestones | push: milestone_with_project -%}
+
+      {%- assign current_date = milestone.date | date: "%s" | plus: 0 -%}
+      {%- if min_date == nil or current_date < min_date -%}
+        {%- assign min_date = current_date -%}
+      {%- endif -%}
+      {%- if max_date == nil or current_date > max_date -%}
+        {%- assign max_date = current_date -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if all_milestones.size > 0 -%}
+<div class="gantt-chart-container max-w-7xl mx-auto mb-16" style="overflow: visible;">
+
+  <div class="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 overflow-visible">
+    <!-- Calculate time span in days with buffer -->
+    <!-- Add 2 months buffer on each side (approximately 120 days) -->
+    <!--  60 days * 86400 seconds -->
+    {%- assign buffer_seconds = 15184000 -%}
+    {%- assign buffered_min_date = min_date | minus: buffer_seconds -%}
+    {%- assign buffered_max_date = max_date | plus: buffer_seconds -%}
+    {%- assign time_span = buffered_max_date | minus: buffered_min_date | divided_by: 86400 | plus: 1 -%}
+    {%- assign current_year = buffered_min_date | date: "%Y" | plus: 0 -%}
+    {%- assign end_year = buffered_max_date | date: "%Y" | plus: 0 -%}
+    {%- assign min_month = buffered_min_date | date: "%m" | plus: 0 -%}
+    {%- assign max_month = buffered_max_date | date: "%m" | plus: 0 -%}
+
+    <!-- Count total months in range -->
+    {%- assign total_months = 0 -%}
+    {%- for year in (current_year..end_year) -%}
+      {%- for month in (1..12) -%}
+        {%- assign month_str = month -%}
+        {%- if month < 10 -%}
+          {%- assign month_str = month | prepend: "0" -%}
+        {%- endif -%}
+        {%- assign date_str = year | append: "-" | append: month_str | append: "-01" -%}
+        {%- assign month_timestamp = date_str | date: "%s" | plus: 0 -%}
+        {%- if month_timestamp >= buffered_min_date and month_timestamp <= buffered_max_date -%}
+          {%- assign total_months = total_months | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+
+    <!-- Two-column layout: Fixed left (project names) + Scrollable right (timeline) -->
+    <div class="flex overflow-visible">
+      <!-- LEFT COLUMN: Fixed project names -->
+      <div class="w-48 flex-shrink-0 bg-gray-50 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800">
+        <!-- Header -->
+        <div class="h-11 px-4 flex items-center border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+          <span class="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">Project</span>
+        </div>
+
+        <!-- Project names -->
+        <div>
+          {%- for subproject in subprojects -%}
+            {%- if subproject.milestones and subproject.milestones.size > 0 -%}
+            <div class="h-24 px-4 flex items-center border-b border-gray-100 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <a href="{{ subproject.url | relative_url }}" class="group flex items-center gap-3 w-full">
+                <div class="flex-1 min-w-0">
+                  <div class="text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors truncate">
+                    {{ subproject.title }}
+                  </div>
+                  <div class="text-xs text-gray-500 dark:text-gray-500 mt-0.5">
+                    {{ subproject.milestones.size }} milestone{{ subproject.milestones.size | plural: '', 's' }}
+                  </div>
+                </div>
+              </a>
+            </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Scrollable timeline (header + all rows) -->
+      <div class="flex-1 overflow-x-auto overflow-y-visible gantt-scrollbar" id="timeline-container">
+        <div class="w-full timeline-content" id="timeline-content" style="min-width: 100%; transform-origin: left center; overflow: visible;">
+          <!-- Timeline header with month/year markers -->
+          <div class="h-11 flex items-center border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900" id="timeline-header">
+            <div class="flex w-full">
+              {%- assign months_array = "Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec" | split: "," -%}
+              {%- assign month_counter = 0 -%}
+              {%- for year in (current_year..end_year) -%}
+                {%- for month in (1..12) -%}
+                  {%- assign month_str = month -%}
+                  {%- if month < 10 -%}
+                    {%- assign month_str = month | prepend: "0" -%}
+                  {%- endif -%}
+                  {%- assign date_str = year | append: "-" | append: month_str | append: "-01" -%}
+                  {%- assign month_timestamp = date_str | date: "%s" | plus: 0 -%}
+
+                  {%- if month_timestamp >= buffered_min_date and month_timestamp <= buffered_max_date -%}
+                    {%- assign month_index = month | minus: 1 -%}
+                    <!-- Calculate percentage width for each month -->
+                    {%- assign month_width_percent = 100.0 | divided_by: total_months -%}
+                    <div class="month-col border-r border-gray-100 dark:border-gray-800 last:border-r-0"
+                         style="width: {{ month_width_percent }}%;"
+                         data-month-index="{{ month_counter }}"
+                         data-is-january="{{ month }}">
+                      <div class="px-2 text-center month-label">
+                        <div class="text-xs font-medium text-gray-900 dark:text-gray-100">{{ months_array[month_index] }}</div>
+                        {%- if month == 1 or forloop.first -%}
+                          <div class="text-xs text-gray-500 dark:text-gray-500 year-label">{{ year }}</div>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                    {%- assign month_counter = month_counter | plus: 1 -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <!-- Project timeline rows -->
+          <div style="overflow: visible;">
+            {%- assign color_scheme = "red,orange,amber,rose,pink" | split: "," -%}
+            {%- for subproject in subprojects -%}
+              {%- if subproject.milestones and subproject.milestones.size > 0 -%}
+              {%- assign color_index = forloop.index0 | modulo: color_scheme.size -%}
+              {%- assign project_color = color_scheme[color_index] -%}
+              <div class="h-24 border-b border-gray-100 dark:border-gray-800 relative hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors" style="overflow: visible;">
+                <div class="absolute inset-0 flex items-center" style="overflow: visible;">
+                  <!-- Month grid background -->
+                  <div class="absolute inset-y-0 left-0 right-0 flex">
+                    {%- assign month_width_percent = 100.0 | divided_by: total_months -%}
+                    {%- for year in (current_year..end_year) -%}
+                      {%- for month in (1..12) -%}
+                        {%- assign month_str = month -%}
+                        {%- if month < 10 -%}
+                          {%- assign month_str = month | prepend: "0" -%}
+                        {%- endif -%}
+                        {%- assign date_str = year | append: "-" | append: month_str | append: "-01" -%}
+                        {%- assign month_timestamp = date_str | date: "%s" | plus: 0 -%}
+
+                        {%- if month_timestamp >= buffered_min_date and month_timestamp <= buffered_max_date -%}
+                          <div class="border-r border-gray-100 dark:border-gray-800" style="width: {{ month_width_percent }}%;"></div>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- endfor -%}
+                  </div>
+
+                  <!-- Timeline bar and milestones -->
+                  <div class="relative w-full" style="z-index: 10;">
+                    <!-- Calculate month index for the start of timeline -->
+                    {%- assign min_year = buffered_min_date | date: "%Y" | plus: 0 -%}
+                    {%- assign min_month_num = buffered_min_date | date: "%m" | plus: 0 -%}
+
+                    <!-- Connection line between first and last milestone -->
+                    {%- if subproject.milestones.size > 1 -%}
+                      {%- assign first_milestone = subproject.milestones | first -%}
+                      {%- assign last_milestone = subproject.milestones | last -%}
+
+                      <!-- Calculate percentage positions based on date range -->
+                      {%- assign first_date = first_milestone.date | date: "%s" | plus: 0 -%}
+                      {%- assign last_date = last_milestone.date | date: "%s" | plus: 0 -%}
+
+                      {%- assign first_offset = first_date | minus: buffered_min_date -%}
+                      {%- assign last_offset = last_date | minus: buffered_min_date -%}
+
+                      {%- assign start_percent = first_offset | times: 100.0 | divided_by: time_span | divided_by: 86400 -%}
+                      {%- assign end_percent = last_offset | times: 100.0 | divided_by: time_span | divided_by: 86400 -%}
+                      {%- assign width_percent = end_percent | minus: start_percent -%}
+
+                      <div class="absolute h-1.5 bg-{{ project_color }}-500 dark:bg-{{ project_color }}-600 rounded-full"
+                           style="left: {{ start_percent }}%; width: {{ width_percent }}%; top: 50%; transform: translateY(-50%);"></div>
+                    {%- endif -%}
+
+                    <!-- Milestone markers -->
+                    {%- for milestone in subproject.milestones -%}
+                      {%- assign milestone_date = milestone.date | date: "%s" | plus: 0 -%}
+                      {%- assign milestone_offset = milestone_date | minus: buffered_min_date -%}
+                      {%- assign position_percent = milestone_offset | times: 100.0 | divided_by: time_span | divided_by: 86400 -%}
+
+                      <a href="{{ subproject.url | relative_url }}#milestones" class="absolute milestone-marker group"
+                           style="left: {{ position_percent }}%; top: 50%; transform: translate(-50%, -50%);"
+                           data-milestone-index="{{ forloop.index0 }}"
+                           data-milestone-title="{{ milestone.title }}"
+                           data-milestone-date="{{ milestone.date | date: '%b %d' }}">
+
+                        <!-- Milestone label (Notion/Figma style) -->
+                        <div class="milestone-label absolute left-1/2 -translate-x-1/2 pointer-events-auto"
+                             style="bottom: calc(100% + 12px); z-index: 30;">
+                          <div class="flex flex-col items-center gap-1">
+                            <!-- Label text container -->
+                            <div class="milestone-label-text bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md px-2 py-1 shadow-sm cursor-pointer">
+                              <div class="text-xs font-medium text-gray-900 dark:text-gray-100 whitespace-nowrap milestone-title">
+                                {{ milestone.title }}
+                              </div>
+                              <div class="milestone-date text-[10px] text-gray-500 dark:text-gray-400 whitespace-nowrap text-center mt-0.5">
+                                {{ milestone.date | date: "%b %d" }}
+                              </div>
+                            </div>
+                            <!-- Connector line -->
+                            <div class="milestone-connector w-px h-2 bg-gray-300 dark:bg-gray-600"></div>
+                          </div>
+                        </div>
+
+                        <!-- Milestone dot -->
+                        <div class="w-3 h-3 rounded-full bg-{{ project_color }}-600 dark:bg-{{ project_color }}-500 border-2 border-white dark:border-gray-900 shadow-sm cursor-pointer transition-all hover:scale-125 hover:shadow-md" style="z-index: 20;"></div>
+                      </a>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-3 px-6">
+      <div class="flex items-center gap-6 text-xs">
+        <div class="flex items-center gap-2">
+          <div class="w-3 h-3 rounded-full bg-red-600 dark:bg-red-500 border-2 border-white dark:border-gray-900"></div>
+          <span class="text-gray-600 dark:text-gray-400">Milestone</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-12 h-1.5 bg-red-500 dark:bg-red-600 rounded-full"></div>
+          <span class="text-gray-600 dark:text-gray-400">Project Duration</span>
+        </div>
+        <div class="flex items-center gap-2 ml-auto">
+          <span class="text-gray-500 dark:text-gray-500">Ctrl+Scroll to zoom</span>
+          <span class="text-gray-400 dark:text-gray-600">|</span>
+          <span class="text-gray-500 dark:text-gray-500" id="zoom-indicator">100%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Clean Notion-style Scrollbar */
+.gantt-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.gantt-scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
+
+.gantt-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gantt-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.gantt-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Dark mode */
+.dark .gantt-scrollbar {
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.dark .gantt-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dark .gantt-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Timeline zoom and transitions */
+.timeline-content {
+  transition: width 0.1s ease-out;
+}
+
+.month-label {
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+/* Smooth scrolling */
+#timeline-container {
+  scroll-behavior: smooth;
+}
+
+/* Prevent text selection during zoom */
+#timeline-container.zooming {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Milestone labels - Notion/Figma style */
+.milestone-label {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.milestone-label-text {
+  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.95);
+  transition: all 0.2s ease;
+}
+
+.dark .milestone-label-text {
+  background-color: rgba(31, 41, 55, 0.95);
+}
+
+.milestone-marker:hover .milestone-label-text,
+.milestone-label-text:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.dark .milestone-marker:hover .milestone-label-text,
+.dark .milestone-label-text:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+/* Ensure label is top layer when hovering */
+.milestone-marker:hover,
+.milestone-marker:hover .milestone-label {
+  z-index: 100 !important;
+}
+
+.milestone-marker:hover .milestone-label-text,
+.milestone-label-text:hover {
+  z-index: 100;
+  position: relative;
+}
+
+/* Milestone label visibility states */
+.milestone-label.label-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.milestone-label.label-compact .milestone-title {
+  display: block;
+}
+
+.milestone-label.label-compact .milestone-date {
+  display: none;
+}
+
+.milestone-label.label-minimal .milestone-title {
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.milestone-label.label-minimal .milestone-date {
+  display: none;
+}
+
+.milestone-label.label-date-only .milestone-title {
+  display: none;
+}
+
+.milestone-label.label-date-only .milestone-date {
+  display: block;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const timelineContainer = document.getElementById('timeline-container');
+  const timelineContent = document.getElementById('timeline-content');
+
+  if (!timelineContainer || !timelineContent) return;
+
+  let zoomLevel = 1;
+  const MIN_ZOOM = 0.5;
+  const MAX_ZOOM = 5;
+  const ZOOM_STEP = 0.1;
+
+  // Update timeline width based on zoom level
+  function updateZoom(newZoom, mouseX = null) {
+    const oldZoom = zoomLevel;
+    zoomLevel = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newZoom));
+
+    // Calculate scroll position to keep mouse position stable during zoom
+    if (mouseX !== null) {
+      const scrollLeft = timelineContainer.scrollLeft;
+      const containerWidth = timelineContainer.clientWidth;
+      const relativeX = (scrollLeft + mouseX) / oldZoom;
+      const newScrollLeft = relativeX * zoomLevel - mouseX;
+
+      timelineContent.style.width = `${zoomLevel * 100}%`;
+      timelineContainer.scrollLeft = newScrollLeft;
+    } else {
+      timelineContent.style.width = `${zoomLevel * 100}%`;
+    }
+
+    // Update zoom indicator
+    const zoomIndicator = document.getElementById('zoom-indicator');
+    if (zoomIndicator) {
+      zoomIndicator.textContent = `${Math.round(zoomLevel * 100)}%`;
+    }
+
+    // Update month label visibility based on zoom
+    updateMonthVisibility();
+
+    // Update milestone label visibility based on zoom
+    updateMilestoneLabels();
+  }
+
+  // Show/hide month labels based on available space
+  function updateMonthVisibility() {
+    const monthCols = timelineContent.querySelectorAll('.month-col');
+    const totalMonths = monthCols.length;
+
+    if (totalMonths === 0) return;
+
+    // Calculate column width in pixels
+    const containerWidth = timelineContainer.clientWidth * zoomLevel;
+    const colWidthPx = containerWidth / totalMonths;
+
+    // Dynamic visibility thresholds
+    const showAllThreshold = 60;      // Show all months if width > 60px
+    const showQuarterThreshold = 30;  // Show every 3 months if width > 30px
+    const showYearThreshold = 15;     // Show only January if width > 15px
+
+    monthCols.forEach((col, index) => {
+      const monthLabel = col.querySelector('.month-label');
+      const monthText = monthLabel.querySelector('.text-xs.font-medium');
+      const yearLabel = monthLabel.querySelector('.year-label');
+      const isJanuary = col.dataset.isJanuary === '1';
+      const isQuarter = index % 3 === 0; // Every 3 months (quarter)
+
+      // Always keep year labels visible
+      if (yearLabel) {
+        yearLabel.style.opacity = '1';
+        yearLabel.style.visibility = 'visible';
+      }
+
+      if (colWidthPx >= showAllThreshold) {
+        // Show all months
+        if (monthText) {
+          monthText.style.opacity = '1';
+          monthText.style.visibility = 'visible';
+        }
+      } else if (colWidthPx >= showQuarterThreshold && isQuarter) {
+        // Show quarterly
+        if (monthText) {
+          monthText.style.opacity = '1';
+          monthText.style.visibility = 'visible';
+        }
+      } else if (colWidthPx >= showYearThreshold && isJanuary) {
+        // Show only January (years)
+        if (monthText) {
+          monthText.style.opacity = '1';
+          monthText.style.visibility = 'visible';
+        }
+      } else {
+        // Hide month name but keep year
+        if (monthText) {
+          monthText.style.opacity = '0';
+          monthText.style.visibility = 'hidden';
+        }
+      }
+    });
+  }
+
+  // Handle mouse wheel events
+  timelineContainer.addEventListener('wheel', function(e) {
+    if (e.ctrlKey || e.metaKey) {
+      // Ctrl + Scroll = Zoom
+      e.preventDefault();
+
+      const rect = timelineContainer.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const delta = -e.deltaY;
+      const zoomChange = delta > 0 ? ZOOM_STEP : -ZOOM_STEP;
+
+      updateZoom(zoomLevel + zoomChange, mouseX);
+    } else {
+      // Normal scroll = Horizontal scroll
+      e.preventDefault();
+      timelineContainer.scrollLeft += e.deltaY;
+    }
+  }, { passive: false });
+
+  // Handle trackpad pinch-to-zoom
+  let lastTouchDistance = 0;
+
+  timelineContainer.addEventListener('touchstart', function(e) {
+    if (e.touches.length === 2) {
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      lastTouchDistance = Math.hypot(
+        touch2.clientX - touch1.clientX,
+        touch2.clientY - touch1.clientY
+      );
+    }
+  }, { passive: true });
+
+  timelineContainer.addEventListener('touchmove', function(e) {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      const currentDistance = Math.hypot(
+        touch2.clientX - touch1.clientX,
+        touch2.clientY - touch1.clientY
+      );
+
+      if (lastTouchDistance > 0) {
+        const delta = currentDistance - lastTouchDistance;
+        const zoomChange = delta * 0.01;
+
+        const rect = timelineContainer.getBoundingClientRect();
+        const centerX = (touch1.clientX + touch2.clientX) / 2 - rect.left;
+
+        updateZoom(zoomLevel + zoomChange, centerX);
+      }
+
+      lastTouchDistance = currentDistance;
+    }
+  }, { passive: false });
+
+  timelineContainer.addEventListener('touchend', function(e) {
+    if (e.touches.length < 2) {
+      lastTouchDistance = 0;
+    }
+  }, { passive: true });
+
+  // Update milestone label visibility and content based on zoom and spacing
+  function updateMilestoneLabels() {
+    const milestoneMarkers = timelineContent.querySelectorAll('.milestone-marker');
+    if (milestoneMarkers.length === 0) return;
+
+    // Calculate available space between milestones
+    const containerWidth = timelineContainer.clientWidth * zoomLevel;
+
+    // Collect milestone positions
+    const milestones = Array.from(milestoneMarkers).map(marker => {
+      const rect = marker.getBoundingClientRect();
+      const containerRect = timelineContainer.getBoundingClientRect();
+      const relativeX = rect.left - containerRect.left + timelineContainer.scrollLeft;
+      const label = marker.querySelector('.milestone-label');
+      const title = marker.dataset.milestoneTitle || '';
+      const date = marker.dataset.milestoneDate || '';
+
+      return {
+        element: marker,
+        label: label,
+        position: relativeX,
+        title: title,
+        date: date
+      };
+    });
+
+    // Sort by position
+    milestones.sort((a, b) => a.position - b.position);
+
+    // Define zoom-based visibility thresholds
+    const ZOOM_THRESHOLDS = {
+      full: 1.5,        // Above 150% zoom: show full labels (title + date)
+      compact: 1.0,     // 100-150% zoom: show title only
+      minimal: 0.7,     // 70-100% zoom: show truncated title
+      dateOnly: 0.5,    // 50-70% zoom: show date only
+      hidden: 0         // Below 50%: check spacing
+    };
+
+    // Spacing threshold in pixels
+    const MIN_SPACING = 120; // Minimum pixels between labels to show them
+
+    milestones.forEach((milestone, index) => {
+      const label = milestone.label;
+      if (!label) return;
+
+      // Calculate spacing to next milestone
+      let spacingToNext = Infinity;
+      if (index < milestones.length - 1) {
+        spacingToNext = (milestones[index + 1].position - milestone.position) * zoomLevel;
+      }
+
+      // Remove all state classes
+      label.classList.remove('label-hidden', 'label-compact', 'label-minimal', 'label-date-only');
+
+      // Determine visibility based on zoom level and spacing
+      if (zoomLevel >= ZOOM_THRESHOLDS.full && spacingToNext >= MIN_SPACING) {
+        // Show full label (title + date)
+        label.classList.remove('label-hidden');
+      } else if (zoomLevel >= ZOOM_THRESHOLDS.compact && spacingToNext >= MIN_SPACING * 0.8) {
+        // Show compact label (title only)
+        label.classList.add('label-compact');
+      } else if (zoomLevel >= ZOOM_THRESHOLDS.minimal && spacingToNext >= MIN_SPACING * 0.6) {
+        // Show minimal label (truncated title)
+        label.classList.add('label-minimal');
+      } else if (zoomLevel >= ZOOM_THRESHOLDS.dateOnly && spacingToNext >= MIN_SPACING * 0.4) {
+        // Show date only
+        // label.classList.add('label-date-only');
+        label.classList.add('label-minimal');
+      } else if (spacingToNext < MIN_SPACING * 0.3) {
+        // Hide label if too crowded
+        label.classList.add('label-minimal');
+      } else {
+        // Default: show date only at low zoom
+        // label.classList.add('label-date-only');
+        label.classList.add('label-minimal');
+      }
+
+      // Special case: Always show first and last milestone labels at higher priority
+      if (index === 0 || index === milestones.length - 1) {
+        if (zoomLevel >= ZOOM_THRESHOLDS.dateOnly) {
+          label.classList.remove('label-hidden');
+          if (label.classList.contains('label-hidden')) {
+            label.classList.remove('label-hidden');
+            label.classList.add('label-date-only');
+          }
+        }
+      }
+    });
+  }
+
+  // Initial visibility update
+  updateMonthVisibility();
+  updateMilestoneLabels();
+
+  // Update on window resize
+  window.addEventListener('resize', function() {
+    updateMonthVisibility();
+    updateMilestoneLabels();
+  });
+});
+</script>
+{%- endif -%}
