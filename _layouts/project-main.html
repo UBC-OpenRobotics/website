@@ -1,0 +1,75 @@
+---
+layout: default
+---
+
+<div class="project-main-page bg-white dark:bg-gray-900 min-h-screen">
+  <div class="container mx-auto px-4 py-16">
+    <div class="max-w-4xl mx-auto mb-6 mt-6">
+      <h1 class="text-center text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-6">{{ page.title }}</h1>
+      
+      <div class="flex justify-center mb-4">
+          {%- assign project = page -%}
+          {% include project-status-badge.html %}
+      </div>
+    </div>
+
+    {%- if page.description -%}
+    <div class="max-w-4xl mx-auto mb-12">
+      <p class="text-lg text-center text-gray-700 dark:text-gray-300">{{ page.description }}</p>
+    </div>
+    {%- endif -%}
+
+    <!-- Sub-projects -->
+    {%- assign page_dir = page.path | remove: page.name -%}
+    {%- assign subprojects = site.projects | where_exp: "item", "item.path contains page_dir" | where_exp: "item", "item.layout == 'project-detail'" | sort: "order" -%}
+
+    {%- if subprojects.size > 0 -%}
+    <div class="max-w-4xl mx-auto mb-16">
+      <h2 class="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-8 text-center">Sub-Projects</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {%- for subproject in subprojects -%}
+        <a href="{{ subproject.url | relative_url }}" class="block bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+          {%- if subproject.thumbnail -%}
+          <div class="aspect-video overflow-hidden">
+            <img src="{{ subproject.thumbnail | relative_url }}"
+                 alt="{{ subproject.title }}"
+                 class="w-full h-full object-cover">
+          </div>
+          {%- endif -%}
+
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-3">{{ subproject.title }}</h3>
+            {%- if subproject.description -%}
+            <p class="text-gray-700 dark:text-gray-300">{{ subproject.description }}</p>
+            {%- endif -%}
+          </div>
+        </a>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto mb-16">
+        <div class="max-w-4xl mx-auto mb-16">
+            <h2 class="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-8 text-center">Progress and Milestones</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+        </div>
+
+        <!-- Gantt Chart -->
+        {% include gantt-chart.html %}
+    </div>
+
+    
+    
+    {%- endif -%}
+
+
+    {%- if content != "" -%}
+    <div class="prose prose-lg dark:prose-invert max-w-4xl mx-auto text-gray-800 dark:text-gray-200">
+      {{ content }}
+    </div>
+    {%- endif -%}
+  </div>
+</div>
