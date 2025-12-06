@@ -32,10 +32,6 @@
 
 {%- if all_milestones.size > 0 -%}
 <div class="gantt-chart-container max-w-7xl mx-auto mb-16">
-  <div class="mb-6">
-    <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-1">Project Timeline</h2>
-    <p class="text-sm text-gray-600 dark:text-gray-400">Track milestones across all sub-projects</p>
-  </div>
 
   <div class="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
     <!-- Calculate time span in days -->
@@ -351,25 +347,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
     monthCols.forEach((col, index) => {
       const monthLabel = col.querySelector('.month-label');
+      const monthText = monthLabel.querySelector('.text-xs.font-medium');
+      const yearLabel = monthLabel.querySelector('.year-label');
       const isJanuary = col.dataset.isJanuary === '1';
       const isQuarter = index % 3 === 0; // Every 3 months (quarter)
 
+      // Always keep year labels visible
+      if (yearLabel) {
+        yearLabel.style.opacity = '1';
+        yearLabel.style.visibility = 'visible';
+      }
+
       if (colWidthPx >= showAllThreshold) {
         // Show all months
-        monthLabel.style.opacity = '1';
-        monthLabel.style.visibility = 'visible';
+        if (monthText) {
+          monthText.style.opacity = '1';
+          monthText.style.visibility = 'visible';
+        }
       } else if (colWidthPx >= showQuarterThreshold && isQuarter) {
         // Show quarterly
-        monthLabel.style.opacity = '1';
-        monthLabel.style.visibility = 'visible';
+        if (monthText) {
+          monthText.style.opacity = '1';
+          monthText.style.visibility = 'visible';
+        }
       } else if (colWidthPx >= showYearThreshold && isJanuary) {
         // Show only January (years)
-        monthLabel.style.opacity = '1';
-        monthLabel.style.visibility = 'visible';
+        if (monthText) {
+          monthText.style.opacity = '1';
+          monthText.style.visibility = 'visible';
+        }
       } else {
-        // Hide
-        monthLabel.style.opacity = '0';
-        monthLabel.style.visibility = 'hidden';
+        // Hide month name but keep year
+        if (monthText) {
+          monthText.style.opacity = '0';
+          monthText.style.visibility = 'hidden';
+        }
       }
     });
   }
