@@ -14,56 +14,138 @@ layout: default
     </div>
 
     {%- if page.description -%}
-    <div class="max-w-4xl mx-auto mb-12">
-      <p class="text-lg text-center text-gray-700 dark:text-gray-300">{{ page.description }}</p>
+    <div class="max-w-4xl mx-auto mb-8">
+      <p class="text-lg text-left text-gray-700 dark:text-gray-300">{{ page.description }}</p>
     </div>
     {%- endif -%}
+
+    <!-- {% include divider.html %} -->
 
     <!-- Sub-projects -->
     {%- assign page_dir = page.path | remove: page.name -%}
     {%- assign subprojects = site.projects | where_exp: "item", "item.path contains page_dir" | where_exp: "item", "item.layout == 'project-detail'" | sort: "order" -%}
 
     {%- if subprojects.size > 0 -%}
-    <div class="max-w-4xl mx-auto mb-16">
-      <h2 class="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-8 text-center">Sub-Projects</h2>
+      <div class="max-w-4xl mx-auto mb-8 mt-12">
+        <h2 class="text-4xl font-semibold text-gray-800 dark:text-gray-100 mb-8 text-center">Sub-projects</h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {%- for subproject in subprojects -%}
-        <a href="{{ subproject.url | relative_url }}" class="block bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
-          {%- if subproject.thumbnail -%}
-          <div class="aspect-video overflow-hidden">
-            <img src="{{ subproject.thumbnail | relative_url }}"
-                 alt="{{ subproject.title }}"
-                 class="w-full h-full object-cover">
-          </div>
-          {%- endif -%}
-
-          <div class="p-6">
-            <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-3">{{ subproject.title }}</h3>
-            {%- if subproject.description -%}
-            <p class="text-gray-700 dark:text-gray-300">{{ subproject.description }}</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {%- for subproject in subprojects -%}
+          <a href="{{ subproject.url | relative_url }}" class="block bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+            {%- if subproject.thumbnail -%}
+            <div class="aspect-video overflow-hidden">
+              <img src="{{ subproject.thumbnail | relative_url }}"
+                  alt="{{ subproject.title }}"
+                  class="w-full h-full object-cover">
+            </div>
             {%- endif -%}
-          </div>
-        </a>
-        {%- endfor -%}
-      </div>
-    </div>
 
-    <div class="max-w-6xl mx-auto mb-16">
-        <div class="max-w-4xl mx-auto mb-16">
-            <h2 class="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-8 text-center">Progress and Milestones</h2>
-            <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-3">{{ subproject.title }}</h3>
+              {%- if subproject.description -%}
+              <p class="text-gray-700 dark:text-gray-300">{{ subproject.description }}</p>
+              {%- endif -%}
+            </div>
+          </a>
+          {%- endfor -%}
         </div>
+      </div>
+    {%- endif -%}
 
-        <!-- Gantt Chart -->
-        {% include gantt-chart.html %}
+
+    <div class="container mx-auto px-4 max-w-4xl">
+      <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-10"> -->
+        <!-- Goals -->
+        {%- if page.goals -%}
+          <div class="flex flex-col md:flex-row items-center gap-16 max-w-6xl mx-auto py-6">
+            <div class="md:w-1/3">
+              <h2 class="text-4xl font-semibold text-gray-900 dark:text-gray-100 mb-4 text-left flex items-center gap-3">
+                <svg class="w-8 h-8 flex-shrink-0 text-red-700 dark:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span>Goals</span>
+              </h2>
+            </div>
+            <div class="md:w-2/3">
+              <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                {{ page.goals }}
+              </p>
+            </div>
+          </div>
+        {%- endif -%}
+        <!-- Ideas -->
+        {%- if page.ideas -%}
+          <div class="flex flex-col md:flex-row items-center gap-16 max-w-6xl mx-auto py-6">
+            <div class="md:w-1/3">
+              <h2 class="text-4xl font-semibold text-gray-900 dark:text-gray-100 mb-4 text-left flex items-center gap-3">
+                <svg class="w-8 h-8 flex-shrink-0 text-red-700 dark:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+                <span>Ideas</span>
+              </h2>
+            </div>
+            <div class="md:w-2/3">
+              <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                {{ page.ideas }}
+              </p>
+            </div>
+          </div>
+        {%- endif -%}
+        <!-- Objective -->
+        {%- if page.objective -%}
+          <div class="flex flex-col md:flex-row items-center gap-16 max-w-6xl mx-auto py-6">
+            <div class="md:w-1/3">
+              <h2 class="text-4xl font-semibold text-gray-900 dark:text-gray-100 mb-4 text-left flex items-center gap-3">
+                <svg class="w-8 h-8 flex-shrink-0 text-red-700 dark:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                <span>Objective</span>
+              </h2>
+            </div>
+            <div class="md:w-2/3">
+              <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                {{ page.objective }}
+              </p>
+            </div>
+          </div>
+        {%- endif -%}
+        <!-- Future Usage -->
+        {%- if page.future -%}
+          <div class="flex flex-col md:flex-row items-center gap-16 max-w-6xl mx-auto py-6">
+            <div class="md:w-1/3">
+              <h2 class="text-4xl font-semibold text-gray-900 dark:text-gray-100 mb-4 text-left flex items-center gap-3">
+                <svg class="w-8 h-8 flex-shrink-0 text-red-700 dark:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                <span>Future</span>
+              </h2>
+            </div>
+            <div class="md:w-2/3">
+              <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                {{ page.future }}
+              </p>
+            </div>
+          </div>
+        {%- endif -%}
+      <!-- </div> -->
     </div>
 
-    
-    
+    {%- if subprojects.size > 0 -%}
+    <div class="max-w-6xl mx-auto mb-16 mt-12">
+      <div class="max-w-4xl mx-auto mb-16">
+          <h2 class="text-4xl font-semibold text-gray-800 dark:text-gray-100 mb-2 text-center">Progress and Milestones</h2>
+          {%- if page.status-description -%}
+          <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+            {{ page.status-description }}
+          </p>
+          {%- endif -%}
+      </div>
+    </div>  
+      <!-- Gantt Chart -->
+      {% include gantt-chart.html %}
     {%- endif -%}
+
+
 
 
     {%- if content != "" -%}

@@ -2,7 +2,7 @@
 layout: project-detail
 title: Drivetrain
 permalink: /projects/robocup/drivetrain/
-thumbnail: /assets/images/robocup/robocup-thumbnail.jpg
+thumbnail: /assets/images/robocup/drivetrain/drivetrain-thumbnail.jpg
 description: Our journey in the RoboCup competition, from initial planning to competing on the international stage.
 milestones:
   - date: "2020-06-01"
