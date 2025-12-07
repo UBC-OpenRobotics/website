@@ -3,7 +3,7 @@ layout: project-main
 title: Guitar Tuner
 permalink: /projects/guitartuner/
 thumbnail: /assets/images/guitartuner/guitartuner-thumbnail.jpg
-description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+description: Automated device that listens and tunes a guitar.
 order: 2
 status: active
 ---

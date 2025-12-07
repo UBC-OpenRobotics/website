@@ -2,7 +2,7 @@
 layout: project-detail
 title: Gripper
 permalink: /projects/robocup/gripper/
-thumbnail: /assets/images/robocup/robocup-thumbnail.jpg
+thumbnail: /assets/images/robocup/gripper/gripper-thumbnail.jpg
 description: Our journey in the RoboCup competition, from initial planning to competing on the international stage.
 milestones:
   - date: "2021-01-01"
