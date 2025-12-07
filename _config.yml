@@ -43,6 +43,8 @@ collections:
   learn:
     output: true
     permalink: /learn/:name/
+  join:
+    output: false
 
 
 # Exclude from processing.
