@@ -4,20 +4,224 @@ title: Learn
 permalink: /learn/
 ---
 
+<style>
+  .category-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .category-badge.software {
+    background-color: #3b82f6;
+    color: white;
+  }
+
+  .category-badge.hardware {
+    background-color: #8b5cf6;
+    color: white;
+  }
+
+  .category-badge.robotics {
+    background-color: #ec4899;
+    color: white;
+  }
+
+  .category-badge.programming {
+    background-color: #10b981;
+    color: white;
+  }
+
+  .category-filter {
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+  }
+
+  .category-filter:hover {
+    transform: translateY(-2px);
+  }
+
+  .category-filter.active {
+    border-color: currentColor;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .learn-card {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .learn-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    border-color: #3b82f6;
+  }
+
+  .learn-card.hidden {
+    display: none;
+  }
+</style>
+
 <div class="learn-page">
-    <section class="relative pt-32 pb-16 flex items-center justify-center">
-        <div class="container mx-auto px-4 max-w-7xl">
-          <div class="text-center mb-20">
-            <h2 class="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6">
-              Learning resources
-            </h2>
-            <p class="text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Coming soon!
-            </p>
+  <section class="relative pt-32 pb-16">
+    <div class="container mx-auto px-4 max-w-7xl">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h2 class="text-5xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">
+          Learn. Grow. Excel.
+        </h2>
+        <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+          Explore our suite of team learning resources!
+        </p>
+      </div>
+
+      <!-- Category Filters -->
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <button class="category-filter active bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
+                onclick="filterCategory('all')"
+                data-category="all">
+          ALL TOPICS
+        </button>
+        <button class="category-filter bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
+                onclick="filterCategory('software')"
+                data-category="software">
+          SOFTWARE
+        </button>
+        <button class="category-filter bg-purple-100 dark:bg-purple-900 text-purple-900 dark:text-purple-100"
+                onclick="filterCategory('hardware')"
+                data-category="hardware">
+          HARDWARE
+        </button>
+        <button class="category-filter bg-pink-100 dark:bg-pink-900 text-pink-900 dark:text-pink-100"
+                onclick="filterCategory('robotics')"
+                data-category="robotics">
+          ROBOTICS
+        </button>
+        <button class="category-filter bg-green-100 dark:bg-green-900 text-green-900 dark:text-green-100"
+                onclick="filterCategory('programming')"
+                data-category="programming">
+          PROGRAMMING
+        </button>
+      </div>
+
+      <!-- Learning Modules Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="learning-grid">
+
+        <!-- Vim Tutorial Card -->
+        <a href="/learn/vim/"
+           class="learn-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden block hover:no-underline"
+           data-category="software programming">
+          <div class="h-48 bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+            <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+            </svg>
           </div>
-          
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="category-badge software">Software</span>
+              <span class="category-badge programming">Programming</span>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              Learn Vim Interactively
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4">
+              Master essential vim commands through 6 interactive lessons and a practice sandbox. Learn navigation, editing, and more.
+            </p>
+            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+              </svg>
+              6 Levels + Sandbox
+            </div>
+          </div>
+        </a>
+
+        <!-- Unix/Linux Tutorial Card (Placeholder) -->
+        <div class="learn-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden opacity-60"
+             data-category="software programming">
+          <div class="h-48 bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center">
+            <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="category-badge software">Software</span>
+              <span class="category-badge programming">Programming</span>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              Unix/Linux Basics
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4">
+              Coming soon! Learn essential Unix/Linux commands and shell scripting.
+            </p>
+            <div class="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-full text-sm font-semibold">
+              Coming Soon
+            </div>
+          </div>
         </div>
-      </section>
 
+        <!-- Add more learning module cards here as they become available -->
 
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="hidden text-center py-16">
+        <svg class="w-24 h-24 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <h3 class="text-xl font-semibold text-gray-600 dark:text-gray-400 mb-2">
+          No modules found in this category
+        </h3>
+        <p class="text-gray-500 dark:text-gray-500">
+          Try selecting a different category or check back later for new content.
+        </p>
+      </div>
+
+    </div>
+  </section>
 </div>
+
+<script>
+function filterCategory(category) {
+  // Update active state on buttons
+  document.querySelectorAll('.category-filter').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  event.target.classList.add('active');
+
+  // Filter cards
+  const cards = document.querySelectorAll('.learn-card');
+  let visibleCount = 0;
+
+  cards.forEach(card => {
+    if (category === 'all') {
+      card.classList.remove('hidden');
+      visibleCount++;
+    } else {
+      const cardCategories = card.getAttribute('data-category');
+      if (cardCategories && cardCategories.includes(category)) {
+        card.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        card.classList.add('hidden');
+      }
+    }
+  });
+
+  // Show/hide empty state
+  const emptyState = document.getElementById('empty-state');
+  if (visibleCount === 0) {
+    emptyState.classList.remove('hidden');
+  } else {
+    emptyState.classList.add('hidden');
+  }
+}
+</script>
