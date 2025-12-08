@@ -5,6 +5,8 @@ on:
     branches: ["prod"]
   workflow_dispatch:
   workflow_call:
+  schedule:
+    - cron: '0 11 * * *'  # 3 AM PST (11 AM UTC)
 
 permissions:
   contents: read
