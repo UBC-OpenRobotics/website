@@ -116,7 +116,8 @@ def main():
     if not positions:
         print("Warning: No open positions found (quantity > 0)")
 
-    project_top_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_top_dir = os.path.dirname(script_dir)
     output_dir = os.path.join(project_top_dir, '_join')
     generate_position_files(positions, output_dir)
 
