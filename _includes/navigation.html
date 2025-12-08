@@ -31,6 +31,60 @@
           <span class="material-icons text-3xl">menu</span>
         </button>
 
+        <!-- Accessibility icon -->
+        <div class="relative" id="accessibilityDropdown">
+          <button onclick="toggleAccessibilityDropdown()"
+                  class="p-2 font-light text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+                  aria-label="Accessibility">
+            <span class="material-icons text-3xl md:hidden">accessibility</span>
+            <span class="hidden md:inline uppercase">ACCESSIBILITY</span>
+          </button>
+
+          <!-- Accessibility dropdown menu -->
+          <div id="accessibilityMenu"
+               class="hidden md:absolute md:right-0 md:mt-2 md:w-80 md:border md:border-gray-300 dark:md:border-gray-600 md:rounded-lg md:shadow-xl
+                      fixed inset-0 md:inset-auto bg-white dark:bg-gray-800 z-50 transition-colors duration-200">
+            <!-- Mobile header -->
+            <div class="md:hidden flex items-center justify-between p-4 border-b-2 border-gray-200 dark:border-gray-700">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Accessibility</h3>
+              <button onclick="toggleAccessibilityDropdown()" class="p-1 text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500">
+                <span class="material-icons text-3xl">close</span>
+              </button>
+            </div>
+
+            <div class="p-4 md:p-4">
+              <!-- Desktop header -->
+              <h3 class="hidden md:block text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">Accessibility</h3>
+
+              <!-- Animation toggle option -->
+              <div class="mt-4 md:mt-3">
+                <div class="flex items-center justify-between p-3 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <div class="flex items-center space-x-3">
+                    <span class="material-icons text-gray-700 dark:text-gray-300">animation</span>
+                    <div>
+                      <p class="text-sm font-semibold text-gray-900 dark:text-gray-100">Animations</p>
+                      <p class="text-xs text-gray-600 dark:text-gray-400">Enable or disable animations</p>
+                    </div>
+                  </div>
+                  <button id="animationToggle"
+                          onclick="toggleAnimations()"
+                          class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 bg-red-600"
+                          role="switch"
+                          aria-checked="true">
+                    <span id="animationToggleSwitch" class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-6"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Backdrop overlay -->
+          <div id="accessibilityBackdrop"
+               class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+               onclick="toggleAccessibilityDropdown()">
+          </div>
+        </div>
+
         <!-- Map pin icon -->
         <div class="relative" id="locationDropdown">
           <button onclick="toggleLocationDropdown()"
@@ -106,6 +160,23 @@
              onclick="toggleMobileMenu()"
              class="block text-gray-900 font-light dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 text-lg transition-colors uppercase">{{ item.name }}</a></li>
       {% endfor %}
+
+      <!-- Accessibility option in mobile menu -->
+      <li class="pt-4 border-t border-gray-200 dark:border-gray-700">
+        <div class="flex items-center justify-between py-2">
+          <div class="flex items-center space-x-3">
+            <span class="material-icons text-gray-700 dark:text-gray-300">animation</span>
+            <span class="text-gray-900 font-light dark:text-gray-100 text-lg">Animations</span>
+          </div>
+          <button id="animationToggleMobile"
+                  onclick="toggleAnimations()"
+                  class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 bg-red-600"
+                  role="switch"
+                  aria-checked="true">
+            <span id="animationToggleSwitchMobile" class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-6"></span>
+          </button>
+        </div>
+      </li>
     </ul>
   </div>
 </nav>
@@ -158,4 +229,113 @@
       document.body.style.overflow = '';
     }
   });
+
+  // Accessibility dropdown toggle
+  function toggleAccessibilityDropdown() {
+    const dropdown = document.getElementById('accessibilityMenu');
+    const backdrop = document.getElementById('accessibilityBackdrop');
+    const isHidden = dropdown.classList.contains('hidden');
+
+    if (isHidden) {
+      // Open modal
+      dropdown.classList.remove('hidden');
+      backdrop.classList.remove('hidden');
+      // Prevent body scroll on mobile when modal is open
+      if (window.innerWidth < 768) {
+        document.body.style.overflow = 'hidden';
+      }
+    } else {
+      // Close modal
+      dropdown.classList.add('hidden');
+      backdrop.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Close accessibility dropdown when clicking outside (desktop only)
+  document.addEventListener('click', function(event) {
+    const accessibilityDropdown = document.getElementById('accessibilityDropdown');
+    const accessibilityMenu = document.getElementById('accessibilityMenu');
+    const accessibilityBackdrop = document.getElementById('accessibilityBackdrop');
+
+    // Only close if clicking outside on desktop
+    if (window.innerWidth >= 768 && accessibilityDropdown && !accessibilityDropdown.contains(event.target)) {
+      accessibilityMenu.classList.add('hidden');
+      accessibilityBackdrop.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Animation toggle functionality
+  function toggleAnimations() {
+    const animationsEnabled = localStorage.getItem('animationsEnabled') !== 'false';
+    const newState = !animationsEnabled;
+
+    localStorage.setItem('animationsEnabled', newState.toString());
+    updateAnimationState(newState);
+  }
+
+  function updateAnimationState(enabled) {
+    const toggle = document.getElementById('animationToggle');
+    const toggleSwitch = document.getElementById('animationToggleSwitch');
+    const toggleMobile = document.getElementById('animationToggleMobile');
+    const toggleSwitchMobile = document.getElementById('animationToggleSwitchMobile');
+    const html = document.documentElement;
+
+    if (enabled) {
+      // Desktop toggle
+      if (toggle) {
+        toggle.classList.remove('bg-gray-400');
+        toggle.classList.add('bg-red-600');
+        toggle.setAttribute('aria-checked', 'true');
+      }
+      if (toggleSwitch) {
+        toggleSwitch.classList.add('translate-x-6');
+        toggleSwitch.classList.remove('translate-x-1');
+      }
+
+      // Mobile toggle
+      if (toggleMobile) {
+        toggleMobile.classList.remove('bg-gray-400');
+        toggleMobile.classList.add('bg-red-600');
+        toggleMobile.setAttribute('aria-checked', 'true');
+      }
+      if (toggleSwitchMobile) {
+        toggleSwitchMobile.classList.add('translate-x-6');
+        toggleSwitchMobile.classList.remove('translate-x-1');
+      }
+
+      html.classList.remove('reduce-motion');
+    } else {
+      // Desktop toggle
+      if (toggle) {
+        toggle.classList.remove('bg-red-600');
+        toggle.classList.add('bg-gray-400');
+        toggle.setAttribute('aria-checked', 'false');
+      }
+      if (toggleSwitch) {
+        toggleSwitch.classList.remove('translate-x-6');
+        toggleSwitch.classList.add('translate-x-1');
+      }
+
+      // Mobile toggle
+      if (toggleMobile) {
+        toggleMobile.classList.remove('bg-red-600');
+        toggleMobile.classList.add('bg-gray-400');
+        toggleMobile.setAttribute('aria-checked', 'false');
+      }
+      if (toggleSwitchMobile) {
+        toggleSwitchMobile.classList.remove('translate-x-6');
+        toggleSwitchMobile.classList.add('translate-x-1');
+      }
+
+      html.classList.add('reduce-motion');
+    }
+  }
+
+  // Initialize animation state on page load
+  (function initAnimations() {
+    const animationsEnabled = localStorage.getItem('animationsEnabled') !== 'false';
+    updateAnimationState(animationsEnabled);
+  })();
 </script>
