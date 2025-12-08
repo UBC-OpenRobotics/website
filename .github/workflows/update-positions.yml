@@ -2,7 +2,7 @@ name: Update Recruitment Positions
 
 on:
   schedule:
-    - cron: '0 */6 * * *' # Run every 6 hours
+    - cron: '0 9 * * *' # Run at 1 AM PST (9 AM UTC)
   workflow_dispatch: # Allow manual trigger
 
 jobs:
@@ -42,3 +42,7 @@ jobs:
             git commit -m "Update recruitment positions from Google Sheets"
             git push
           fi
+
+  deploy:
+    needs: update-positions
+    uses: ./.github/workflows/deploy.yml
