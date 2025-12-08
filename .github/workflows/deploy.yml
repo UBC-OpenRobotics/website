@@ -30,6 +30,12 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Fetch positions from Google Sheets
+        env:
+          GOOGLE_SHEET_URL: ${{ secrets.POSITIONS_SHEET_URL }}
+        run: |
+          python scripts/fetch_positions.py
+
       - name: Build Jekyll site
         run: bundle exec jekyll build
         env:
