@@ -1,5 +1,7 @@
 # Deploying to GitHub Pages
 
+NOTE 2025/12/21: PLEASE DO NOT REFER TO THIS DOCUMENTATION AS IT IS OUTDATED.
+
 This site is very easy to deploy to GitHub Pages using GitHub Actions. Everything is automated!
 
 ## How It Works
