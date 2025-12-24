@@ -6,6 +6,8 @@
 
 layout: home
 title: UBC Open Robotics
-team-description: UBC Open Robotics, nicknamed 'OpBots', is an advanced robotics design team at The University of British Columbia. Together, we represent approximately 60 students from various faculties. Our three projects allow us to explore different aspects of mechatronics; from a piano-playing robot, to a painting robot, to an advanced humanoid service bot, we have it all!
-projects-section-description: At UBC Open Robotics, we have many projects. 
+team-description: UBC Open Robotics, nicknamed "OpBots", is a multidisciplinary robotics design team at the University of British Columbia. We bring together over 60 students from across UBC, including engineering (mechanical, electrical, chemical, biomedical, integrated, engineering physics), science (neuroscience, microbiology) and more. 
+team-description-2: Our team provides a collaborative, hands-on environment where members develop strong technical problem solving skills. OpBots members consistently go on to achieve success beyond the team, pursuing impactful careers and opportunities across industry, research, and entrepreneurship.
+projects-section-description: "Learn more about the legacy and pioneering projects that continue to define our team: Legacy (old), pioneer (new)"
+ 
 ---

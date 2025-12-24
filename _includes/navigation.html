@@ -110,14 +110,14 @@
               <h3 class="hidden md:block text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">Our Location</h3>
 
               <p class="text-sm md:text-sm text-gray-700 dark:text-gray-300 mb-3 mt-4 md:mt-0">
-                <strong>Hennings Building Room 200</strong><br>
-                6224 Agricultural Rd #325<br>
-                Vancouver, BC V6T 1Z1
+                <strong>{{ site.data.info.location.building }}</strong><br>
+                {{ site.data.info.location.address }}<br>
+                {{ site.data.info.location.city }}, {{ site.data.info.location.province }} {{ site.data.info.location.postal-code }}
               </p>
 
               <div class="w-full h-64 md:h-48 rounded-md overflow-hidden">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2603.5233475984237!2d-123.25476908768105!3d49.26647977178184!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548672b6f5321131%3A0x1877a1f004691be!2sHennings%20Building!5e0!3m2!1sen!2sca!4v1763926664596!5m2!1sen!2sca"
+                  src="{{ site.data.info.location.google-maps-embedded-iframe-link }}"
                   width="100%"
                   height="100%"
                   style="border:0;"

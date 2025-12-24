@@ -55,7 +55,7 @@ layout: default
   <section class="bg-white dark:bg-gray-800 flex items-center justify-center py-16">
     <div class="container mx-auto px-4">
       
-      <div class="flex flex-col md:flex-row items-center gap-16 max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center gap-16 max-w-7xl mx-auto">
         <div class="md:w-1/2">
           <img src="{{ '/assets/images/team/team-photo.jpg' | relative_url }}"
                alt="Open Robotics Team"
@@ -66,7 +66,12 @@ layout: default
           <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
             {{ page.team-description }}
           </p>
-          <button class="mt-4 md:text-xl border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold py-4 px-8 rounded-lg transition-colors tracking-wide">
+          {%- if page.team-description-2 -%}
+          <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mt-4">
+            {{ page.team-description-2 }}
+          </p>
+          {%- endif -%}
+          <button class="mt-6 md:text-xl border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold py-4 px-8 rounded-lg transition-colors tracking-wide">
             <a href="/join">JOIN OUR TEAM</a>
           </button>
         </div>
@@ -87,7 +92,7 @@ layout: default
     <div class="container mx-auto px-4">
 
       <!-- Project text and desc -->
-      <div class="flex flex-col md:flex-row items-left gap-16 max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row items-left gap-16 max-w-7xl mx-auto">
         <div class="md:w-1/2">
           <h2 class="text-5xl font-semibold text-gray-800 dark:text-gray-100 text-left">Projects. Systems. Solutions.</h2>
         </div>
@@ -101,7 +106,7 @@ layout: default
       <div class="h-16 transparent"></div>
 
       <!-- Carousel Container -->
-      <div class="relative max-w-6xl mx-auto">
+      <div class="relative max-w-7xl mx-auto">
         <div class="carousel-container overflow-hidden px-4 md:px-0">
           <!-- Desktop: 3 cards per slide -->
           <div class="carousel-track-desktop hidden md:flex transition-transform duration-500 ease-in-out">
@@ -252,7 +257,7 @@ layout: default
       <div class="h-8 transparent"></div>
 
       <!-- PROJECT BUTTONS -->
-      <div class="flex flex-col md:flex-row items-center justify-center gap-8 max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-center gap-8 max-w-7xl mx-auto">
         <button class="mt-4 md:text-xl border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold py-4 px-8 rounded-lg transition-colors tracking-wide">
           <a href="/projects">EXPLORE PROJECTS</a>
         </button>
