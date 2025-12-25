@@ -7,36 +7,123 @@ permalink: /projects
 
 <div class="projects-page">
     <section class="relative pt-32 pb-4 flex items-center justify-center">
-        <div class="mx-auto px-4 max-w-7xl">
-          <div class="text-center">
-            <h2 class="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-6">
+        <div class="relative mx-auto px-4 max-w-7xl">
+          <div class="items-center mb-6 gap-3">
+            <h2 class="text-5xl md:text-6xl font-black text-gray-900 dark:text-white">
               Our Projects
             </h2>
           </div>
+          <div class="absolute flex flex-wrap justify-center
+                      overflow-visible
+                      w-8 h-8
+                      top-[0.8em] md:top-[1em] sm:top-[0.9em] left-[100%]">
+            <div class="w-full cursor-pointer" onclick="displayDropdown()">
+              <?xml version="1.0" encoding="utf-8"?>
+              <svg class="md:w-8 md:h-8 w-6 h-6
+                          hover:text-red-500 stroke-white" 
+                   viewBox="0 0 24 24" 
+                   fill="none" 
+                   xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 4H21L14 12V20L10 22V12L3 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            
+          </div>
+          <div id="filterDropdown"
+               class="relative flex flex-row justify-center
+                      hidden
+                      p-3
+                      z-10
+                      text-sm">
+              <div class="p-1">
+                <label class="flex items-center gap-2 p-1 cursor-pointer">
+                  <input type="checkbox" class="peer hidden" id="legacyCheckbox"> 
+
+                  <span
+                    class="h-4 w-4 border dark:border-white border-black rounded
+                    flex items-center justify-center
+                    dark:peer-checked:bg-white peer-checked:bg-black"
+                  >
+                    <svg
+                      class="hidden peer-checked:block h-3 w-3 text-gray-900"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0l-3.5-3.5a1 1 0 011.4-1.4l2.8 2.8 6.8-6.8a1 1 0 011.4 0z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                Legacy
+                </label>
+              </div>
+              <div class="p-1">
+                <label class="flex items-center gap-2 p-1 cursor-pointer">
+                    <input type="checkbox" class="peer hidden" id="pioneeringCheckbox"> 
+
+                    <span
+                      class="h-4 w-4 border dark:border-white border-black rounded
+                      flex items-center justify-center
+                      dark:peer-checked:bg-white peer-checked:bg-black"
+                    >
+                      <svg
+                        class="hidden peer-checked:block h-3 w-3 text-gray-900"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0l-3.5-3.5a1 1 0 011.4-1.4l2.8 2.8 6.8-6.8a1 1 0 011.4 0z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                Pioneering
+                </label>
+              </div>
+            </div>
+            <div id="subprojectDropdown" class="flex justify-center mb-4 text-sm hidden">
+                <label class="flex items-center gap-2 p-1 cursor-pointer">
+                    <input type="checkbox" class="peer hidden" id="subprojectCheckbox"> 
+
+                    <span
+                    class="h-4 w-4 border dark:border-white border-black rounded
+                    flex items-center justify-center
+                    dark:peer-checked:bg-white peer-checked:bg-black"
+                    >
+                    <svg
+                      class="hidden peer-checked:block h-3 w-3 text-gray-900"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0l-3.5-3.5a1 1 0 011.4-1.4l2.8 2.8 6.8-6.8a1 1 0 011.4 0z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    </span>
+                Sub Projects
+                </label>
+            </div>
         </div>
     </section>
 
-    <div class="flex justify-center overflow-hidden pb-16 gap-4">
-      <span class="pt-2 pb-2 pl-4 pr-4 rounded-3xl bg-gray-900 dark:bg-gray-800 text-sm text-white hover:opacity-70 duration-300">
-        All Projects
-      </span>
-      <span class="pt-2 pb-2 pl-4 pr-4 rounded-3xl bg-gray-900 dark:bg-gray-800 text-sm text-white hover:opacity-70 duration-300">
-        Category 2
-      </span>
-      <span class="pt-2 pb-2 pl-4 pr-4 rounded-3xl bg-gray-900 dark:bg-gray-800 text-sm text-white hover:opacity-70 duration-300">
-        Category 3
-      </span>
-      <span class="pt-2 pb-2 pl-4 pr-4 rounded-3xl bg-gray-900 dark:bg-gray-800 text-sm text-white hover:opacity-70 duration-300">
-        Category 4
-      </span>
-    </div>
-    {%- assign sorted_projects = site.projects | sort: "order" -%}
+    {%- assign all_projects = site.projects | sort: "status" -%}
+    {%- assign sorted_projects = all_projects | where_exp: "item", "item.layout == 'project-main'" -%}
+    {%- assign sorted_subprojects = all_projects | where_exp: "item", "item.layout == 'project-detail'" -%}
 
     <!-- PROJECT BOXES -->
     <div class="flex flex-wrap flex-row justify-center gap-16 mb-20">
       {%- for project in sorted_projects -%}
         <!-- PROJECT BOX -->
-        <div class="relative w-96 h-[400px] bg-white dark:bg-gray-800 rounded-3xl shadow-xl hover:shadow-gray-500 transition-all duration-300 hover:scale-105">
+        <div 
+            class="project-box relative w-96 h-[400px] bg-white dark:bg-gray-800 rounded-3xl shadow-xl hover:shadow-gray-500 transition-all duration-300 hover:scale-105
+                   {% if project.layout == 'project-detail' %}hidden{% endif %}"
+            data-status="{{ project.status }}"
+            data-layout="{{ project.layout }}">
           <img src="{{ project.thumbnail | relative_url }}"
                alt="{{ project.title }}"
                class="w-full h-48 object-cover rounded-t-3xl">
@@ -45,7 +132,130 @@ permalink: /projects
                class="text-xl font-semibold text-gray-800 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 transition-colors block">
               {{ project.title }}
             </a>
-            <p class="text-gray-600 dark:text-gray-300 mt-3 text-sm leading-relaxed line-clamp-4">
+
+            {%- if project.status -%}
+                  <div class="mt-2">
+                    {%- case project.status -%}
+                      {%- when "active" -%}
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                          <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <circle cx="10" cy="10" r="4"/>
+                          </svg>
+                          Active
+                        </span>
+                      {%- when "on hold" -%}
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                          <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM9 9V5h2v4H9zm0 4v-2h2v2H9z"/>
+                          </svg>
+                          On Hold
+                        </span>
+                      {%- when "completed" -%}
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                          <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                          </svg>
+                          Completed
+                        </span>
+                      {%- when "archived" -%}
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                          <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8h8l-4 8z"/>
+                          </svg>
+                          Archived
+                        </span>
+                    {%- endcase -%}
+                  </div>
+            {%- endif -%}
+                  
+            <p class="text-gray-600 dark:text-gray-300 mt-3 text-sm leading-relaxed line-clamp-3">
+              {{ project.description }}
+            </p>
+          </div>
+          <div class="flex absolute justify-center items-center bottom-4 left-4 h-6 gap-2">
+            <a href="https://github.com"
+               target="_blank"
+               class="hover:text-red-500">
+              <svg class="w-5 h-5 dark:fill-white hover:fill-red-500" 
+                 xmlns="http://www.w3.org/2000/svg" 
+                 viewBox="0 0 100 100">
+                <path fill-rule="evenodd" 
+                      clip-rule="evenodd" 
+                      d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" 
+                      fill="currentColor"/>
+              </svg>
+            </a>
+            <a href="https://youtube.com">
+              <?xml version="1.0" encoding="utf-8"?>
+              <svg class="w-8 h-8 dark:stroke-white hover:text-red-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.5245 6.00694C20.3025 5.81544 20.0333 5.70603 19.836 5.63863C19.6156 5.56337 19.3637 5.50148 19.0989 5.44892C18.5677 5.34348 17.9037 5.26005 17.1675 5.19491C15.6904 5.06419 13.8392 5 12 5C10.1608 5 8.30956 5.06419 6.83246 5.1949C6.09632 5.26005 5.43231 5.34348 4.9011 5.44891C4.63628 5.50147 4.38443 5.56337 4.16403 5.63863C3.96667 5.70603 3.69746 5.81544 3.47552 6.00694C3.26514 6.18846 3.14612 6.41237 3.07941 6.55976C3.00507 6.724 2.94831 6.90201 2.90314 7.07448C2.81255 7.42043 2.74448 7.83867 2.69272 8.28448C2.58852 9.18195 2.53846 10.299 2.53846 11.409C2.53846 12.5198 2.58859 13.6529 2.69218 14.5835C2.74378 15.047 2.81086 15.4809 2.89786 15.8453C2.97306 16.1603 3.09841 16.5895 3.35221 16.9023C3.58757 17.1925 3.92217 17.324 4.08755 17.3836C4.30223 17.461 4.55045 17.5218 4.80667 17.572C5.32337 17.6733 5.98609 17.7527 6.72664 17.8146C8.2145 17.9389 10.1134 18 12 18C13.8865 18 15.7855 17.9389 17.2733 17.8146C18.0139 17.7527 18.6766 17.6733 19.1933 17.572C19.4495 17.5218 19.6978 17.461 19.9124 17.3836C20.0778 17.324 20.4124 17.1925 20.6478 16.9023C20.9016 16.5895 21.0269 16.1603 21.1021 15.8453C21.1891 15.4809 21.2562 15.047 21.3078 14.5835C21.4114 13.6529 21.4615 12.5198 21.4615 11.409C21.4615 10.299 21.4115 9.18195 21.3073 8.28448C21.2555 7.83868 21.1874 7.42043 21.0969 7.07448C21.0517 6.90201 20.9949 6.72401 20.9206 6.55976C20.8539 6.41236 20.7349 6.18846 20.5245 6.00694Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"/>
+                <path d="M14.5385 11.5L10.0962 14.3578L10.0962 8.64207L14.5385 11.5Z"
+                      stroke="currentColor" 
+                      stroke-width="2" 
+                      stroke-linecap="round" 
+                      stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      {%- endfor -%}
+      
+      {%- for project in sorted_subprojects -%}
+        <!-- PROJECT BOX -->
+        <div 
+            class="project-box relative w-96 h-[400px] bg-white dark:bg-gray-800 rounded-3xl shadow-xl hover:shadow-gray-500 transition-all duration-300 hover:scale-105
+                   {% if project.layout == 'project-detail' %}hidden{% endif %}"
+            data-status="{{ project.status }}"
+            data-layout="{{ project.layout }}">
+          <img src="{{ project.thumbnail | relative_url }}"
+               alt="{{ project.title }}"
+               class="w-full h-48 object-cover rounded-t-3xl">
+          <div class="p-4">
+            <a href="{{ project.url | relative_url }}"
+               class="text-xl font-semibold text-gray-800 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 transition-colors block">
+              {{ project.title }}
+            </a>
+
+            {%- if project.status -%}
+                  <div class="mt-2">
+                    {%- case project.status -%}
+                      {%- when "active" -%}
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                          <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <circle cx="10" cy="10" r="4"/>
+                          </svg>
+                          Active
+                        </span>
+                      {%- when "on hold" -%}
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                          <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM9 9V5h2v4H9zm0 4v-2h2v2H9z"/>
+                          </svg>
+                          On Hold
+                        </span>
+                      {%- when "completed" -%}
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                          <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                          </svg>
+                          Completed
+                        </span>
+                      {%- when "archived" -%}
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                          <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8h8l-4 8z"/>
+                          </svg>
+                          Archived
+                        </span>
+                    {%- endcase -%}
+                  </div>
+            {%- endif -%}
+                  
+            <p class="text-gray-600 dark:text-gray-300 mt-3 text-sm leading-relaxed line-clamp-3">
               {{ project.description }}
             </p>
           </div>
@@ -83,5 +293,5 @@ permalink: /projects
     </div>
 
     <!-- boxes javascript -->
-    <script src="{{ '/assets/js/project-boxes.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/project-filter.js' | relative_url }}"></script>
 </div>
