@@ -3,7 +3,8 @@ layout: project-detail
 title: Gripper
 permalink: /projects/robocup/gripper/
 thumbnail: /assets/images/robocup/gripper/gripper-thumbnail.jpg
-description: Our journey in the RoboCup competition, from initial planning to competing on the international stage.
+description: Robotic gripper for everyday objects.
+wip: true
 milestones:
   - date: "2021-01-01"
     title: "Project Kickoff"

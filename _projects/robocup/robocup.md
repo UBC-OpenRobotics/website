@@ -11,5 +11,6 @@ objective: This project aims to develop service and assistive robot technology h
 future: We will continue developing the software architecture, which will pave the path for the Robocup@Home 2021 Open League Challenge as well as expand our relationship with the Robocup@Home Community across North America and lead initiatives that promote robotics.
 order: 1
 status: completed
+enable_ganttchart: false
 status-description: Started in 2018, we have made steady continous progress. Currently, many portions of this project is on hold. However, we are working as a team to return fully in coming years.
 ---
