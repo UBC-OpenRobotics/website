@@ -5,6 +5,7 @@ permalink: /projects/robocup/arm/
 thumbnail: /assets/images/robocup/arm_mechanical/arm-mechanical-thumbnail.webp
 description: Designing a 6 Degrees of Freedom (6DoF) robot arm commonly used in industrial manufacturing.
 categories: mechanical
+wip: true
 milestones:
   - date: "2023-12-10"
     title: "First Competition"

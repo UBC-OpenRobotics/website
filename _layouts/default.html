@@ -60,7 +60,11 @@
 
   <main class="page-content" aria-label="Content">
     <div class="wrapper">
-      {{ content }}
+      {%- if page.wip == true -%}
+        {% include wip.html %}
+      {%- else -%}
+        {{ content }}
+      {%- endif -%}
     </div>
   </main>
 

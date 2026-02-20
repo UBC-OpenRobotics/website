@@ -3,7 +3,8 @@ layout: project-detail
 title: Computer Vision
 permalink: /projects/robocup/computer-vision/
 thumbnail: /assets/images/robocup/robocup-thumbnail.jpg
-description: Our journey in the RoboCup competition, from initial planning to competing on the international stage.
+description: Using computer vision for object classification and recognition.
+wip: true
 milestones:
   - date: "2021-01-01"
     title: "Project Kickoff"

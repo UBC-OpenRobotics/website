@@ -4,6 +4,7 @@ title: Navigation
 permalink: /projects/robocup/navigation/
 thumbnail: /assets/images/robocup/navigation/navigation-thumbnail.png
 description: Path planning and obstacle avoidance using SLAM.
+wip: true
 milestones:
   - date: "2021-01-01"
     title: "Project Kickoff"

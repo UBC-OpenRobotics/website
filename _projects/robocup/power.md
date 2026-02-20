@@ -4,6 +4,7 @@ title: Power
 permalink: /projects/robocup/power/
 thumbnail: /assets/images/robocup/power/power-thumbnail.jpg
 description: Subteam that determines the power needs of the robot, finds a battery solution, and designs the power electronics (buck converters, BMS modules).
+wip: true
 milestones:
   - date: "2021-01-01"
     title: "Project Kickoff"
