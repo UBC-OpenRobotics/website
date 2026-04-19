@@ -363,6 +363,13 @@ function checkModeSwitch() {
 function draw() {
     if (!canvas) return;
 
+    // Check if animations are disabled
+    if (document.documentElement.classList.contains('reduce-motion')) {
+        // Clear canvas and stop animation
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        return;
+    }
+
     checkModeSwitch();
 
     if (currentMode === 'pipes') {

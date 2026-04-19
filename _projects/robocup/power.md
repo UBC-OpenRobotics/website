@@ -1,9 +1,9 @@
 ---
 layout: project-detail
-title: Navigation
-permalink: /projects/robocup/navigation/
-thumbnail: /assets/images/robocup/navigation/navigation-thumbnail.png
-description: Path planning and obstacle avoidance using SLAM.
+title: Power
+permalink: /projects/robocup/power/
+thumbnail: /assets/images/robocup/power/power-thumbnail.jpg
+description: Subteam that determines the power needs of the robot, finds a battery solution, and designs the power electronics (buck converters, BMS modules).
 wip: true
 milestones:
   - date: "2021-01-01"

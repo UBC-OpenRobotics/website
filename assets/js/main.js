@@ -1,9 +1,14 @@
 let lastScrollY = window.scrollY;
 
 window.addEventListener('scroll', () => {
+    // Check for reduced motion preference
+    if (document.documentElement.classList.contains('reduce-motion')) {
+        return;
+    }
+
     const scrollY = window.scrollY;
     const scrollDelta = scrollY - lastScrollY;
-    
+
     // Get all gear elements
     const gears = document.querySelectorAll('.gear');
     
@@ -28,13 +33,18 @@ window.addEventListener('scroll', () => {
 // Add some automatic slow rotation on page load
 window.addEventListener('load', () => {
     const gears = document.querySelectorAll('.gear');
-    
+
     gears.forEach((gear, index) => {
         // Initialize rotation data
         gear.dataset.rotation = 0;
-        
+
         // Add a subtle continuous rotation
         setInterval(() => {
+            // Check for reduced motion preference
+            if (document.documentElement.classList.contains('reduce-motion')) {
+                return;
+            }
+
             if (Math.abs(window.scrollY - lastScrollY) < 1) { // Only when not scrolling
                 let rotationSpeedMultiplier = (index === 1) ? 1.5 : (index === 2) ? 0.5 : 1;
                 const currentRotation = parseFloat(gear.dataset.rotation) || 0;

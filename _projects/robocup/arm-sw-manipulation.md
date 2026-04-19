@@ -3,8 +3,9 @@ layout: project-detail
 title: Arm - Software Manipulation
 permalink: /projects/robocup/manipulation/
 thumbnail: /assets/images/robocup/arm_sw_manipulation/manipulation-thumbnail.png
-description: Our journey in the RoboCup competition, from initial planning to competing on the international stage.
+description: Training the robotic arm to move via Reinforcement Learning.
 categories: software, machine-learning
+wip: true
 milestones:
   - date: "2023-12-10"
     title: "First Competition"

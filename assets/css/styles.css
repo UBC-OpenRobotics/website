@@ -90,3 +90,25 @@ button, .obot_button {
     height: 100%;
     pointer-events: none;
 }
+
+/* Reduced motion accessibility */
+html.reduce-motion *,
+html.reduce-motion *::before,
+html.reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+}
+
+html.reduce-motion .gear {
+    animation: none !important;
+}
+
+html.reduce-motion #ambient-canvas {
+    display: none !important;
+}
+
+html.reduce-motion .carousel-track-desktop,
+html.reduce-motion .carousel-track-mobile {
+    transition: none !important;
+}

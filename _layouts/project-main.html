@@ -141,8 +141,10 @@ layout: default
           {%- endif -%}
       </div>
     </div>  
+      {%- if page.enable_ganttchart == true -%}
       <!-- Gantt Chart -->
-      {% include gantt-chart.html %}
+        {% include gantt-chart.html %}
+      {%- endif -%}
     {%- endif -%}
 
 
