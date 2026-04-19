@@ -1,6 +1,6 @@
 # Deployment Guide
 
-The UBC Open Robotics website is deployed to GitHub Pages automatically via GitHub Actions. The live site is served from **https://openrobotics.site** and backed by the GitHub Pages deployment at `https://ubc-openrobotics.github.io/website/`.
+The UBC Open Robotics website is deployed to GitHub Pages automatically via GitHub Actions. The live site is served from **https://openrobotics.ca** and backed by the GitHub Pages deployment at `https://ubc-openrobotics.github.io/website/`.
 
 ## Deployment Model
 
@@ -60,7 +60,7 @@ See [recruitment-setup.md](../recruitment-setup.md) for the expected sheet forma
 
 ### 4. (Optional) Configure a custom domain
 
-The site is served at `https://openrobotics.site`. To change the domain:
+The site is served at `https://openrobotics.ca`. To change the domain:
 
 1. Add a `CNAME` file at the repo root containing the domain name
 2. Configure the DNS records with your registrar to point at GitHub Pages
@@ -104,7 +104,7 @@ If `prod` is already at the commit you want deployed and you just want to re-run
 
 1. Go to the **Actions** tab and watch the **Deploy to GitHub Pages** run. Builds usually take 2–3 minutes.
 2. Once the `deploy` job shows a green check, the site is live.
-3. Open https://openrobotics.site (or `https://ubc-openrobotics.github.io/website/` if using the default domain) and hard-refresh (Ctrl+Shift+R / Cmd+Shift+R) to bypass the CDN cache.
+3. Open https://openrobotics.ca (or `https://ubc-openrobotics.github.io/website/` if using the default domain) and hard-refresh (Ctrl+Shift+R / Cmd+Shift+R) to bypass the CDN cache.
 
 ## Pre-Deployment Checklist
 
