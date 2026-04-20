@@ -41,7 +41,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pyyaml
+          pip install pyyaml Pillow
 
       - name: Fetch positions from Google Sheets
         env:
@@ -53,6 +53,9 @@ jobs:
         run: bundle exec jekyll build
         env:
           JEKYLL_ENV: production
+
+      - name: Convert images to WebP
+        run: python scripts/convert_images_to_webp.py
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
