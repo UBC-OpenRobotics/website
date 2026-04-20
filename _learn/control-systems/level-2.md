@@ -17,6 +17,7 @@ sim_config:
 ---
 **Note**: Bang-Bang Control, A.K.A. 2-step on-off controller. [See on Wikipedia](https://en.wikipedia.org/wiki/Bang%E2%80%93bang_control).
 
+<br>
 
 The simplest form of closed-loop control: look at the **error** (setpoint minus
 position), and if it's positive, push hard forward; if negative, push hard back.

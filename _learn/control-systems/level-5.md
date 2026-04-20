@@ -40,12 +40,16 @@ term pulls back to damp the approach.
 Intuitively: **Kp** reacts to *where* you are. **Ki** reacts to *where you've
 been*. **Kd** reacts to *where you're heading*.
 
+<br>
+
 **Try it:**
 
 - Set Kp high (say 15). See the big overshoot.
 - Add Kd gradually. The overshoot flattens out, but the response stays quick.
 - Too much Kd: the system becomes over-damped and sluggish, or starts reacting
   to noise (in real life — here there is no sensor noise).
+
+<br>
 
 Derivative is the most delicate term. In real hardware, noisy encoders can
 make `de/dt` explode; engineers often filter the derivative or differentiate

@@ -30,11 +30,15 @@ Proportional control makes the actuator effort proportional to the error:
 The larger the error, the harder we push. As the plant approaches the
 setpoint, the error shrinks and the effort tapers smoothly toward zero.
 
+<br>
+
 **Try it:**
 
 - Start with **Kp = 1**. The mass drifts in lazily and settles short of the target.
 - Crank Kp up. The response gets snappier — and eventually starts oscillating.
 - There is a sweet spot.
+
+<br>
 
 Watch the trade-off: low Kp = slow and sluggish; high Kp = fast but oscillatory.
 Nothing about this changes even with perfect, noise-free sensors — it's just how
