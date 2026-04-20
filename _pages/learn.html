@@ -67,6 +67,13 @@ permalink: /learn/
   .learn-card.hidden {
     display: none;
   }
+
+  .learn-card-thumb {
+    width: 100%;
+    height: 12rem;
+    object-fit: cover;
+    display: block;
+  }
 </style>
 
 <div class="learn-page">
@@ -75,10 +82,10 @@ permalink: /learn/
       <!-- Header -->
       <div class="text-center mb-12">
         <h2 class="text-5xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">
-          Learn. Grow. Excel.
+          Learn with us!
         </h2>
         <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-          Explore our suite of team learning resources!
+          Explore our suite of team learning resources :)
         </p>
       </div>
 
@@ -114,61 +121,72 @@ permalink: /learn/
       <!-- Learning Modules Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="learning-grid">
 
-        <!-- Vim Tutorial Card -->
-        <a href="/learn/vim/"
-           class="learn-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden block hover:no-underline"
-           data-category="software programming">
-          <div class="h-48 bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-            <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-            </svg>
-          </div>
-          <div class="p-6">
-            <div class="flex items-center gap-2 mb-3">
-              <span class="category-badge software">Software</span>
-              <span class="category-badge programming">Programming</span>
-            </div>
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              Learn Vim Interactively
-            </h3>
-            <p class="text-gray-600 dark:text-gray-300 mb-4">
-              Master essential vim commands through 6 interactive lessons and a practice sandbox. Learn navigation, editing, and more.
-            </p>
-            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-              </svg>
-              6 Levels + Sandbox
-            </div>
-          </div>
-        </a>
+        {%- comment -%}
+          Auto-generate cards from `_learn/<module>/<module>.{html,md}` landing pages.
+          A landing page is identified by its filename stem matching its parent directory name.
+        {%- endcomment -%}
+        {% for module in site.learn %}
+          {% assign parts = module.path | split: "/" %}
+          {% assign dir = parts[1] %}
+          {% assign filename = parts[2] | split: "." | first %}
+          {% if dir == filename %}
+          {% assign cats = module.category | default: "" | split: "," %}
+          {% assign data_cat = "" %}
+          {% for c in cats %}
+            {% assign trimmed = c | strip %}
+            {% if trimmed != "" %}
+              {% assign data_cat = data_cat | append: trimmed | append: " " %}
+            {% endif %}
+          {% endfor %}
+          {% assign data_cat = data_cat | strip %}
 
-        <!-- Unix/Linux Tutorial Card (Placeholder) -->
-        <div class="learn-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden opacity-60"
-             data-category="software programming">
-          <div class="h-48 bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center">
-            <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-            </svg>
-          </div>
-          <div class="p-6">
-            <div class="flex items-center gap-2 mb-3">
-              <span class="category-badge software">Software</span>
-              <span class="category-badge programming">Programming</span>
-            </div>
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              Unix/Linux Basics
-            </h3>
-            <p class="text-gray-600 dark:text-gray-300 mb-4">
-              Coming soon! Learn essential Unix/Linux commands and shell scripting.
-            </p>
-            <div class="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-full text-sm font-semibold">
-              Coming Soon
-            </div>
-          </div>
-        </div>
+          {% assign card_tag = "a" %}
+          {% assign card_extra = "block hover:no-underline" %}
+          {% assign card_href = module.url %}
+          {% if module.coming_soon %}
+            {% assign card_tag = "div" %}
+            {% assign card_extra = "opacity-60" %}
+          {% endif %}
 
-        <!-- Add more learning module cards here as they become available -->
+          <{{ card_tag }} {% if card_tag == "a" %}href="{{ card_href | relative_url }}"{% endif %}
+             class="learn-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden {{ card_extra }}"
+             data-category="{{ data_cat }}">
+            {% if module.thumbnail %}
+              <img src="{{ module.thumbnail | relative_url }}" alt="{{ module.title }}" class="learn-card-thumb" />
+            {% else %}
+              <div class="h-48 bg-gradient-to-br from-gray-600 to-gray-800"></div>
+            {% endif %}
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-3 flex-wrap">
+                {% for c in cats %}
+                  {% assign trimmed = c | strip %}
+                  {% if trimmed != "" %}
+                    <span class="category-badge {{ trimmed }}">{{ trimmed | capitalize }}</span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                {{ module.title }}
+              </h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
+                {{ module.description }}
+              </p>
+              {% if module.coming_soon %}
+                <div class="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-full text-sm font-semibold">
+                  Coming Soon
+                </div>
+              {% elsif module.meta %}
+                <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                  </svg>
+                  {{ module.meta }}
+                </div>
+              {% endif %}
+            </div>
+          </{{ card_tag }}>
+          {% endif %}
+        {% endfor %}
 
       </div>
 
