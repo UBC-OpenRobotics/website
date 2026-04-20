@@ -16,12 +16,19 @@ sim_config:
   trackRange: [-3, 3]
 ---
 
+Imagine walking with your eyes closed and hoping you'll keep a straight line...
+Probably not the best thing to do in front of the officer that's making you do a field sobriety test.
+
+<br>
+
 An **open-loop** system sends a fixed command to the plant and hopes for the best.
 There is no sensor, no feedback, no correction. If anything pushes the plant off
-course (wind, friction, payload changes) the system has no way to know, let
+course (wind, friction, payload changes) the system has no way to know and let
 alone respond.
 
-Here, the command is simply "go to 1". But we're not using feedback, so the
+<br>
+
+Here, we're trying to "go to 1". But we're not using feedback, so the
 actuator output is **zero**. The mass just sits where it starts (or drifts if you
 add a disturbance below).
 

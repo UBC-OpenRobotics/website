@@ -44,8 +44,12 @@ A real-world tuning strategy:
 3. Add Ki to eliminate the steady-state offset caused by gravity + spring.
 4. Iterate.
 
-This is the classic **Ziegler–Nichols flavor** of manual tuning. Real
+<br>
+
+This is the classic **Ziegler-Nichols flavor** of manual tuning. Real
 practitioners also look at rise time, phase margin, and disturbance rejection.
+
+<br>
 
 Once you've settled, drag the **d** slider to push the mass with an external
 disturbance. A well-tuned PID rejects it; a poorly-tuned one oscillates or
