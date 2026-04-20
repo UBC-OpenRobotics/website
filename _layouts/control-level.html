@@ -1,0 +1,193 @@
+---
+layout: default
+---
+
+<link rel="stylesheet" href="{{ '/assets/css/control.css' | relative_url }}">
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 pt-32 pb-16">
+  <div class="container mx-auto px-4 max-w-7xl">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+      <div>
+        <div class="text-sm uppercase tracking-wider text-blue-600 dark:text-blue-400 font-semibold mb-1">
+          Control Systems - Level {{ page.level_id }}
+        </div>
+        <h1 class="text-3xl md:text-4xl font-black text-gray-900 dark:text-white">
+          {{ page.level_title }}
+        </h1>
+      </div>
+      <a href="/learn/control-systems/" class="inline-block px-5 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-semibold text-sm w-fit">
+        Back to Module
+      </a>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-6">
+
+      <!-- Left: explanation + controls -->
+      <div class="lg:w-1/2 control-card">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Concept</h2>
+        <div class="prose prose-sm dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 mb-4">
+          {{ content }}
+        </div>
+
+        {% if page.success_spec %}
+        <div class="control-spec">
+          <h4>Goal</h4>
+          <div class="text-sm text-gray-800 dark:text-gray-100">{{ page.success_spec }}</div>
+        </div>
+        {% endif %}
+
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Tune</h2>
+
+        <div class="mb-4">
+          {% if page.enable_kp %}
+          <div class="control-slider-row">
+            <label for="kp">Kp</label>
+            <input type="range" id="kp" />
+            <span id="kp-val" class="control-readout">0.00</span>
+          </div>
+          {% endif %}
+
+          {% if page.enable_ki %}
+          <div class="control-slider-row">
+            <label for="ki">Ki</label>
+            <input type="range" id="ki" />
+            <span id="ki-val" class="control-readout">0.00</span>
+          </div>
+          {% endif %}
+
+          {% if page.enable_kd %}
+          <div class="control-slider-row">
+            <label for="kd">Kd</label>
+            <input type="range" id="kd" />
+            <span id="kd-val" class="control-readout">0.00</span>
+          </div>
+          {% endif %}
+
+          {% if page.enable_disturbance %}
+          <div class="control-slider-row">
+            <label for="dist">d</label>
+            <input type="range" id="dist" min="-3" max="3" step="0.1" value="0" />
+            <span id="dist-val" class="control-readout">0.00</span>
+          </div>
+          <p class="text-xs text-gray-500 dark:text-gray-400 -mt-1 mb-2">
+            <code>d</code> is an external disturbance force applied to the plant.
+          </p>
+          {% endif %}
+        </div>
+
+        <div class="flex gap-2 flex-wrap mb-2">
+          <button id="start" class="control-btn start">Start</button>
+          <button id="pause" class="control-btn pause">Pause</button>
+          <button id="reset" class="control-btn reset">Reset</button>
+        </div>
+
+        <div class="mt-6 flex gap-3 flex-wrap">
+          {% if page.prev_level %}
+            <a href="{{ page.prev_level }}" class="inline-block px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 text-sm font-semibold">
+              Previous
+            </a>
+          {% endif %}
+          {% if page.next_level %}
+            <a href="{{ page.next_level }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-semibold">
+              Next
+            </a>
+          {% endif %}
+          {% if page.is_last_level %}
+            <a href="/learn/control-systems/sandbox" class="inline-block px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-sm font-semibold">
+              Try the Sandbox!
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Right: visualization + plot -->
+      <div class="lg:w-1/2 control-card">
+        <h3 class="text-sm uppercase tracking-wider font-semibold text-gray-500 dark:text-gray-400 mb-2">Plant</h3>
+        <canvas id="track" class="control-track" width="600" height="120"></canvas>
+
+        <h3 class="text-sm uppercase tracking-wider font-semibold text-gray-500 dark:text-gray-400 mt-4 mb-2">Response</h3>
+        <canvas id="plot" class="control-plot" width="600" height="260"></canvas>
+
+        <div id="success-banner" class="hidden mt-4 p-3 rounded-lg bg-green-100 dark:bg-green-900 text-green-900 dark:text-green-100 text-sm font-semibold">
+          ✓ Target met! Try moving on to the next level.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="{{ '/assets/js/control.js' | relative_url }}"></script>
+<script>
+(function () {
+  const cfg = {{ page.sim_config | jsonify }};
+
+  // Build setpoint function from config.
+  function makeSetpoint(spec) {
+    if (!spec || !spec.kind) return ControlSim.setpointFns.step(1, 0.5);
+    const args = spec.args || [];
+    const fn = ControlSim.setpointFns[spec.kind];
+    return fn ? fn(...args) : ControlSim.setpointFns.step(1, 0.5);
+  }
+
+  const sim = new ControlSim.Simulation({
+    plant: cfg.plant || {},
+    controller: cfg.controller || { type: 'pid' },
+    setpoint: makeSetpoint(cfg.setpoint),
+    disturbance: cfg.disturbance || 0,
+    tWindow: cfg.tWindow || 10,
+    trackRange: cfg.trackRange || [-2, 2],
+    success: cfg.success || null,
+    trackCanvas: document.getElementById('track'),
+    plotCanvas: document.getElementById('plot'),
+    onSuccess: () => {
+      const banner = document.getElementById('success-banner');
+      if (banner) banner.classList.remove('hidden');
+    },
+  });
+
+  function fitCanvas(c) {
+    const rect = c.getBoundingClientRect();
+    c.width = Math.round(rect.width);
+    c.height = Math.round(rect.height);
+  }
+  fitCanvas(document.getElementById('track'));
+  fitCanvas(document.getElementById('plot'));
+  window.addEventListener('resize', () => {
+    fitCanvas(document.getElementById('track'));
+    fitCanvas(document.getElementById('plot'));
+    sim.render();
+  });
+
+  // Wire up sliders present in the DOM.
+  const gainSpecs = [];
+  if (document.getElementById('kp')) gainSpecs.push({ id: 'kp', key: 'kp', min: cfg.kpMin ?? 0, max: cfg.kpMax ?? 20, step: 0.1, value: cfg.kp0 ?? 0 });
+  if (document.getElementById('ki')) gainSpecs.push({ id: 'ki', key: 'ki', min: cfg.kiMin ?? 0, max: cfg.kiMax ?? 10, step: 0.05, value: cfg.ki0 ?? 0 });
+  if (document.getElementById('kd')) gainSpecs.push({ id: 'kd', key: 'kd', min: cfg.kdMin ?? 0, max: cfg.kdMax ?? 10, step: 0.05, value: cfg.kd0 ?? 0 });
+  ControlSim.bindGainSliders(sim, gainSpecs);
+
+  const distEl = document.getElementById('dist');
+  const distReadout = document.getElementById('dist-val');
+  if (distEl) {
+    distEl.value = cfg.disturbance ?? 0;
+    if (distReadout) distReadout.textContent = (+distEl.value).toFixed(2);
+    sim.setDisturbance(+distEl.value);
+    distEl.addEventListener('input', () => {
+      const v = +distEl.value;
+      if (distReadout) distReadout.textContent = v.toFixed(2);
+      sim.setDisturbance(v);
+    });
+  }
+
+  ControlSim.bindButtons(sim, { start: 'start', pause: 'pause', reset: 'reset' });
+
+  document.getElementById('reset').addEventListener('click', () => {
+    const banner = document.getElementById('success-banner');
+    if (banner) banner.classList.add('hidden');
+  });
+
+  sim.render();
+})();
+</script>
