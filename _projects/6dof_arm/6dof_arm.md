@@ -2,7 +2,7 @@
 layout: project-main
 title: 6-DoF Arm
 permalink: /projects/6dofarm/
-thumbnail: /assets/images/placeholders/default.svg
+thumbnail: /assets/images/arm6dof/arm6dof.png
 brief: A 6 degree-of-freedom robotic arm designed to serve hot beverages.
 description: A 6 degree-of-freedom robotic arm designed to serve hot beverages. The system incorporates mechanical components, such as motors and gearboxes, electrical hardware, such as PCB’s and MCU’s, and software developed using ROS2 for control and automation.
 goals: The 6DoF Arms projects allows students to explore their passion for robotics on a multidisciplinary team. Students will learn the fundamentals of mechanical robotic arm design, PCB design and system integration, and robotic control using the ROS2 framework.
