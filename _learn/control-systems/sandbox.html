@@ -1,0 +1,189 @@
+---
+layout: default
+title: Control Systems Sandbox
+permalink: /learn/control-systems/sandbox
+---
+
+<link rel="stylesheet" href="{{ '/assets/css/control.css' | relative_url }}">
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 pt-32 pb-16">
+  <div class="container mx-auto px-4 max-w-7xl">
+
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+      <div>
+        <div class="text-sm uppercase tracking-wider text-blue-600 dark:text-blue-400 font-semibold mb-1">
+          Control Systems
+        </div>
+        <h1 class="text-3xl md:text-4xl font-black text-gray-900 dark:text-white">PID Sandbox</h1>
+      </div>
+      <a href="/learn/control-systems/" class="inline-block px-5 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-semibold text-sm w-fit">
+        Back to Module
+      </a>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-6">
+
+      <!-- Left: controls -->
+      <div class="lg:w-1/2 control-card">
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          Free-play PID tuner. Configure the plant, pick a setpoint waveform,
+          adjust gains, add disturbance. No success criteria, no rails.
+        </p>
+
+        <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Plant</h2>
+        <div class="grid grid-cols-2 gap-3 mb-4 text-sm">
+          <div class="control-slider-row">
+            <label for="m">m</label>
+            <input type="range" id="m" min="0.2" max="5" step="0.1" value="1" />
+            <span id="m-val" class="control-readout">1.00</span>
+          </div>
+          <div class="control-slider-row">
+            <label for="b">b</label>
+            <input type="range" id="b" min="0" max="3" step="0.05" value="0.3" />
+            <span id="b-val" class="control-readout">0.30</span>
+          </div>
+          <div class="control-slider-row">
+            <label for="k">k</label>
+            <input type="range" id="k" min="0" max="5" step="0.05" value="0" />
+            <span id="k-val" class="control-readout">0.00</span>
+          </div>
+          <div class="control-slider-row">
+            <label for="g">g</label>
+            <input type="range" id="g" min="-2" max="2" step="0.05" value="0" />
+            <span id="g-val" class="control-readout">0.00</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">
+          <code>m</code> = mass, <code>b</code> = viscous friction,
+          <code>k</code> = spring to origin, <code>g</code> = gravity.
+        </p>
+
+        <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Gains</h2>
+        <div class="control-slider-row">
+          <label for="kp">Kp</label>
+          <input type="range" id="kp" min="0" max="40" step="0.1" value="2" />
+          <span id="kp-val" class="control-readout">2.00</span>
+        </div>
+        <div class="control-slider-row">
+          <label for="ki">Ki</label>
+          <input type="range" id="ki" min="0" max="15" step="0.05" value="0" />
+          <span id="ki-val" class="control-readout">0.00</span>
+        </div>
+        <div class="control-slider-row">
+          <label for="kd">Kd</label>
+          <input type="range" id="kd" min="0" max="15" step="0.05" value="0" />
+          <span id="kd-val" class="control-readout">0.00</span>
+        </div>
+
+        <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-2 mt-4">Setpoint</h2>
+        <div class="flex gap-2 flex-wrap mb-4">
+          <button class="sp-btn control-btn reset" data-kind="step">Step</button>
+          <button class="sp-btn control-btn reset" data-kind="ramp">Ramp</button>
+          <button class="sp-btn control-btn reset" data-kind="pulse">Pulse</button>
+          <button class="sp-btn control-btn reset" data-kind="sine">Sine</button>
+        </div>
+
+        <div class="control-slider-row">
+          <label for="dist">d</label>
+          <input type="range" id="dist" min="-3" max="3" step="0.1" value="0" />
+          <span id="dist-val" class="control-readout">0.00</span>
+        </div>
+
+        <div class="flex gap-2 flex-wrap mt-3">
+          <button id="start" class="control-btn start">Start</button>
+          <button id="pause" class="control-btn pause">Pause</button>
+          <button id="reset" class="control-btn reset">Reset</button>
+        </div>
+      </div>
+
+      <!-- Right: viz -->
+      <div class="lg:w-1/2 control-card">
+        <h3 class="text-sm uppercase tracking-wider font-semibold text-gray-500 dark:text-gray-400 mb-2">Plant</h3>
+        <canvas id="track" class="control-track" width="600" height="120"></canvas>
+
+        <h3 class="text-sm uppercase tracking-wider font-semibold text-gray-500 dark:text-gray-400 mt-4 mb-2">Response</h3>
+        <canvas id="plot" class="control-plot" width="600" height="260"></canvas>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="{{ '/assets/js/control.js' | relative_url }}"></script>
+<script>
+(function () {
+  const sim = new ControlSim.Simulation({
+    plant: { m: 1, b: 0.3, k: 0, g: 0 },
+    controller: { type: 'pid', kp: 2, ki: 0, kd: 0, uMax: 50, iMax: 30 },
+    setpoint: ControlSim.setpointFns.step(1, 0.5),
+    tWindow: 12,
+    trackRange: [-3, 3],
+    trackCanvas: document.getElementById('track'),
+    plotCanvas: document.getElementById('plot'),
+  });
+
+  function fitCanvas(c) {
+    const rect = c.getBoundingClientRect();
+    c.width = Math.round(rect.width);
+    c.height = Math.round(rect.height);
+  }
+  fitCanvas(document.getElementById('track'));
+  fitCanvas(document.getElementById('plot'));
+  window.addEventListener('resize', () => {
+    fitCanvas(document.getElementById('track'));
+    fitCanvas(document.getElementById('plot'));
+    sim.render();
+  });
+
+  // Plant sliders write directly to sim.plant.
+  ['m', 'b', 'k', 'g'].forEach(key => {
+    const el = document.getElementById(key);
+    const ro = document.getElementById(key + '-val');
+    if (!el) return;
+    const sync = () => {
+      sim.plant[key] = +el.value;
+      if (ro) ro.textContent = (+el.value).toFixed(2);
+    };
+    sync();
+    el.addEventListener('input', sync);
+  });
+
+  // Gain sliders.
+  ControlSim.bindGainSliders(sim, [
+    { id: 'kp', key: 'kp', min: 0, max: 40, step: 0.1, value: 2 },
+    { id: 'ki', key: 'ki', min: 0, max: 15, step: 0.05, value: 0 },
+    { id: 'kd', key: 'kd', min: 0, max: 15, step: 0.05, value: 0 },
+  ]);
+
+  // Disturbance.
+  const distEl = document.getElementById('dist');
+  const distRo = document.getElementById('dist-val');
+  distEl.addEventListener('input', () => {
+    sim.setDisturbance(+distEl.value);
+    distRo.textContent = (+distEl.value).toFixed(2);
+  });
+
+  // Setpoint selector.
+  const spFns = {
+    step: () => ControlSim.setpointFns.step(1, 0.5),
+    ramp: () => ControlSim.setpointFns.ramp(0.5, 2, 0.5),
+    pulse: () => ControlSim.setpointFns.pulse(1, 1, 4),
+    sine: () => ControlSim.setpointFns.sine(1, 4),
+  };
+  document.querySelectorAll('.sp-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      sim.setSetpoint(spFns[b.dataset.kind]());
+      document.querySelectorAll('.sp-btn').forEach(x => x.classList.remove('start'));
+      document.querySelectorAll('.sp-btn').forEach(x => x.classList.add('reset'));
+      b.classList.remove('reset');
+      b.classList.add('start');
+    });
+  });
+  // Default-select Step.
+  document.querySelector('.sp-btn[data-kind="step"]').click();
+
+  ControlSim.bindButtons(sim, { start: 'start', pause: 'pause', reset: 'reset' });
+
+  sim.render();
+})();
+</script>
