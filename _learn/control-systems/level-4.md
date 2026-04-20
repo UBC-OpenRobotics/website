@@ -37,8 +37,9 @@ Enter the **integral** term. It accumulates error over time:
 <div class="control-eq">u(t) = Kp · e(t)  +  Ki · ∫ e(t) dt</div>
 
 As long as there's *any* nonzero error, the integral keeps growing and pumping
-up the command. The only steady state is one where `e = 0` — exactly what we
-want.
+up the command. The only steady state is one where `e = 0`, which is exactly what we want!
+
+<br>
 
 **Try it:**
 
@@ -47,6 +48,6 @@ want.
 - Raise Ki too far: oscillation and sluggish overshoot (the integral
   accumulates too much before the error flips).
 
-*Aside — integral windup:* if the actuator is saturated for a long time, the
+*Aside, integral windup:* if the actuator is saturated for a long time, the
 integral can grow huge and cause massive overshoot later. Real implementations
 clamp the integral (we do, via `iMax`).
