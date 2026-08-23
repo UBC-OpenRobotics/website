@@ -9,6 +9,7 @@ goals: The 6DoF Arms projects allows students to explore their passion for robot
 ideas: Our inspiration comes from a variety of service robots being rolled out around the world such as Artly’s Barista Bot and Hestia Robotics Group’s Coffee Robot.
 objective: The objective of our project through our live demos is to increase the exposure of robotics service technologies to the general public and inspire students to get involved in robotics projects of their own.
 future: Future development of the arm focuses on improving mechanical precision, optimizing motion planning, and preparing the project for possible showcases and compensations.
+github: https://github.com/UBC-OpenRobotics/6DoF-Arm
 order: 2
 status: active
 ---
