@@ -12,7 +12,7 @@ import sys
 import time
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageOps
 
 SITE_DIR = Path("_site")
 IMAGE_EXTS = {".png", ".jpg", ".jpeg"}
@@ -38,6 +38,7 @@ def convert_image(path: Path) -> tuple[bool, int, int]:
     original_bytes = path.stat().st_size
     try:
         with Image.open(path) as img:
+            img = ImageOps.exif_transpose(img)  # bake in the correct orientation
             mode = img.mode
             size = img.size
             save_kwargs = {"quality": 85, "method": 6}
