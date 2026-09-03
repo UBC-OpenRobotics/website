@@ -45,11 +45,13 @@ permalink: /join/
                       </span>
                     </div>
                     {% endif %}
+                    {% comment %}
                     <div class="flex items-center gap-4">
                       <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
                         {{ position.quantity }} {% if position.quantity == 1 %}position{% else %}positions{% endif %} available
                       </span>
                     </div>
+                    {% endcomment %}
                   </div>
                   <div class="flex-shrink-0">
                     {% if position.form_link and position.form_link != '' %}

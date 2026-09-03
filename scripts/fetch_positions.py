@@ -79,7 +79,7 @@ def generate_position_files(positions, output_dir):
 
         frontmatter = {
             'title': position['title'],
-            'quantity': position['quantity'],
+            #'quantity': position['quantity'],
             'form_link': position['form_link'],
             'project' : position['project'],
             'order': idx + 1
