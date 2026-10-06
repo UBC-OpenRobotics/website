@@ -15,9 +15,25 @@
       </div>
 
       <!-- Desktop nav links  -->
-      <ul class="hidden md:flex md:space-x-8 md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
+      <ul class="hidden md:flex md:items-center md:space-x-8 md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
         {% for item in site.data.navigation %}
+        {% if item.dropdown %}
+        <li class="relative group">
+          <a href="{{ item.link }}" class="flex items-center gap-0.5 text-gray-900 font-light dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 md:text-base transition-colors uppercase">
+            {{ item.name }}
+            <span class="material-icons text-lg">expand_more</span>
+          </a>
+          <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50">
+            <ul class="min-w-[190px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl py-2">
+              {% for sub in item.dropdown %}
+              <li><a href="{{ sub.link }}" class="block px-4 py-2 text-sm text-gray-900 dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors uppercase whitespace-nowrap">{{ sub.name }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </li>
+        {% else %}
         <li><a href="{{ item.link }}" class="text-gray-900 font-light dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 md:text-base transition-colors uppercase">{{ item.name }}</a></li>
+        {% endif %}
         {% endfor %}
       </ul>
 
@@ -156,9 +172,20 @@
   <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
     <ul class="flex flex-col px-4 py-4 space-y-4">
       {% for item in site.data.navigation %}
-      <li><a href="{{ item.link }}"
-             onclick="toggleMobileMenu()"
-             class="block text-gray-900 font-light dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 text-lg transition-colors uppercase">{{ item.name }}</a></li>
+      <li>
+        <a href="{{ item.link }}"
+           onclick="toggleMobileMenu()"
+           class="block text-gray-900 font-light dark:text-gray-100 hover:text-red-600 dark:hover:text-red-500 text-lg transition-colors uppercase">{{ item.name }}</a>
+        {% if item.dropdown %}
+        <ul class="pl-4 mt-2 space-y-2">
+          {% for sub in item.dropdown %}
+          <li><a href="{{ sub.link }}"
+                 onclick="toggleMobileMenu()"
+                 class="block text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-500 text-base transition-colors uppercase">{{ sub.name }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </li>
       {% endfor %}
 
       <!-- Accessibility option in mobile menu -->
