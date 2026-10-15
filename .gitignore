@@ -8,3 +8,4 @@ node_modules/
 assets/js/dist
 package-lock.json
 _join/*.md
+repomix-output.xml
