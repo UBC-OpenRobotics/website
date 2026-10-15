@@ -2,17 +2,15 @@
 layout: project-main
 title: HETRA
 permalink: /projects/hetra/
-# TODO: swap for a real photo/render once you have one (e.g. /assets/images/hetra/hetra-thumbnail.jpg)
+# TODO: Nate will say which photo to use for the thumbnail
 thumbnail: /assets/images/placeholders/default.svg
-brief: A teleoperated robotic arm that mirrors the operator's hand and lets them feel what it grips.
-description: "HETRA is a teleoperation system that lets an operator control a 6-DoF robotic arm with their own hand and physically feel what the robot is holding. The operator's hand position and orientation are tracked and mirrored by the arm in real time, a force-sensing gripper measures how hard the robot is gripping, and a wearable finger exoskeleton renders that grip force back to the operator as resistance and vibration."
-goals: "HETRA gives students hands-on experience across the full robotics stack: <b>mechanical</b> design of a finger exoskeleton and force-sensing gripper, <b>electrical</b> and embedded work on sensors and actuators, <b>software</b> for hand tracking, inverse kinematics, and arm control, and a low-latency <b>communications</b> link that ties it all together."
-# TODO: ask Nate what inspired the project, then uncomment and fill in
-# ideas: ""
-objective: "Build a bidirectional teleoperation system where operator motion drives the robot arm and robot contact forces are fed back to the operator, with latency and jitter low enough that the haptic feedback feels stable and natural."
-future: "Later phases expand tracking to the operator's full arm posture and add an operator dashboard with live telemetry and data logging."
-# TODO: add the GitHub repo link if there is one
-# github: https://github.com/UBC-OpenRobotics/...
+brief: A teleoperated robot arm that mirrors the operator's movements and lets them feel what it grips.
+description: "HETRA (Haptic Exoskeleton & Teleoperated Robot Arm) is a teleoperation system that lets an operator control a remote 6-DoF robot arm with their own arm and physically feel what it is holding. A wearable tracker turns the operator's arm movements into robot motion, and a haptic hand exoskeleton maps the robot's contact forces back onto the operator's fingers. The project explores human-robot interaction, haptics, and wearable exoskeletons."
+goals: "HETRA gives students hands-on experience across the full robotics stack: <b>mechanical</b> design of wearable linkages, grippers, and robot joints, <b>electrical</b> work on custom PCBs, sensors, and motor control, <b>firmware</b> for haptic rendering and sensor fusion, and <b>software</b> for computer vision, inverse kinematics, ROS, and low-latency networking."
+ideas: "Most teleoperation relies on vision alone, yet research shows haptic feedback leads to better force control, faster task completion, and fewer errors. HETRA brings the sense of touch to remote manipulation, which matters wherever direct human presence is dangerous or impossible, such as bomb disposal, space, and surgery."
+objective: "Build a bilateral teleoperation system where the operator's movements drive the robot arm and the robot's contact forces are rendered back to the operator, fast and stable enough that touching a hard surface feels immediate."
+future: "As the subsystems come together, the team will integrate them into a complete teleoperation system, with a live telemetry dashboard to monitor system health, sensor data, and tracking status."
+github: https://github.com/UBC-OpenRobotics
 order: 6
 status: active
 wip: false
