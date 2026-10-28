@@ -1,0 +1,93 @@
+# Roster 2026-2027
+# - leads: shown large with photos
+# - members: shown as an avatar stack, expanding to rows with photo + role
+# - photo: filename in assets/images/roster/ (optional, falls back to initials)
+# - short: label for the jump button (defaults to name)
+
+- id: captains
+  name: Captains
+  leads:
+    - { name: Nate Noguera, role: Co-Captain, photo: nate_noguera.JPG }
+    - { name: Patrick Delfin, role: Co-Captain, photo: patrick_delfin.png }
+
+- id: admin
+  name: Admin
+  short: Admin
+  section: admin
+  members:
+    - { name: Ashley Gonzales, role: Purchasing Coordinator }
+    - { name: Adam Chang, role: Web Developer }
+    - { name: Michelle Diana McClellan, role: Sponsorships Director }
+
+- id: exoskeleton
+  name: Operator Haptic Exoskeleton
+  short: Exoskeleton
+  leads:
+    - { name: Andy Setiawan, role: Co-Lead, photo: andy_setiawan.JPG }
+    - { name: Kenneth Manohar, role: Co-Lead, photo: kenneth_manohar.png }
+  members:
+    - { name: Guanyu Zhu, role: Member }
+    - { name: Trieu Truong, role: Member }
+    - { name: Boswell Tsang, role: Member }
+    - { name: Daniel Xie, role: Member }
+    - { name: Sharvari Dhuri, role: Member }
+    - { name: Grae Hansen, role: Member }
+    - { name: Brian Madappilly, role: Member }
+    - { name: Bradley Wong, role: Member }
+    - { name: Ceyang Dong, role: Member }
+    - { name: Leo Dronov, role: Member }
+
+- id: motiontracking
+  name: Operator Hand Motion Tracking
+  short: Motion Tracking
+  leads:
+    - { name: Hasna Aulia, role: Lead, photo: hasna_aulia.jpeg }
+  members:
+    - { name: Bianca Li, role: Member }
+    - { name: Henry van Weelderen, role: Member }
+    - { name: Jose Damara Hadriana, role: Member, photo: jose_damara_hadriana.jpg }
+    - { name: Tiger Wang, role: Member }
+    - { name: Yash Garg, role: Member }
+    - { name: Srija Belide, role: Member }
+
+- id: arm
+  name: Robot 6DOF Arm
+  short: Robot Arm
+  leads:
+    - { name: Kevin Gao, role: Mechanical Lead, photo: kevin_gao.JPG }
+    - { name: Artur Kochetygov, role: Electrical Lead, photo: artur_kochetygov.jpg }
+  members:
+    - { name: Jacky Chan, role: Member }
+    - { name: Harry Nguyen, role: Member }
+    - { name: Fiona Lin, role: Member }
+    - { name: Kimathy Tagoe, role: Member }
+    - { name: Isaac Maljaars, role: Member }
+    - { name: Steven Yuan, role: Member }
+    - { name: Kathryne Zong, role: Member }
+    - { name: Joao Landim, role: Member }
+    - { name: Zhiwen Zhong, role: Member }
+
+- id: endeffector
+  name: Robot Force-Sensing End Effector
+  short: End Effector
+  leads:
+    - { name: Nam Ha, role: Lead, photo: nam_ha.jpg }
+  members:
+    - { name: Danny Do, role: Member }
+    - { name: Lena Le, role: Member }
+    - { name: Pasariya Vorapa, role: Member }
+    - { name: Yichen Liu, role: Member }
+    - { name: Mac Gao, role: Member }
+
+- id: communications
+  name: Communications & Telemetry
+  short: Communications
+  leads:
+    - { name: Mudasser Jalal, role: Lead, photo: mudasser_jalal.jpg }
+  members:
+    - { name: Piyusha Satija, role: Member }
+    - { name: Daniel Ko, role: Member }
+    - { name: Terry Deng, role: Member }
+    - { name: Felix Ma, role: Member }
+    - { name: Sharvya Verma, role: Member }
+    - { name: Tansihq Patel, role: Member }
