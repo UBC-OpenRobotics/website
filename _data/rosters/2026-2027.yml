@@ -15,9 +15,12 @@
   short: Admin
   section: admin
   members:
-    - { name: Ashley Gonzales, role: Purchasing Coordinator }
+    - { name: Ashley Gonzalez, role: Purchasing Coordinator }
     - { name: Adam Chang, role: Web Developer }
-    - { name: Michelle Diana McClellan, role: Sponsorships Director }
+    - { name: Jose Damara Hadriana, role: Web Developer, photo: jose_damara_hadriana.jpg }
+    - { name: Michelle McClellan, role: Sponsorships Director }
+    - { name: Lacarmia Jia, role: Graphic Designer }
+    - { name: Andy Setiawan, role: Lab Manager, photo: andy_setiawan.JPG }
 
 - id: exoskeleton
   name: Operator Haptic Exoskeleton
@@ -44,7 +47,7 @@
     - { name: Hasna Aulia, role: Lead, photo: hasna_aulia.jpeg }
   members:
     - { name: Bianca Li, role: Member }
-    - { name: Henry van Weelderen, role: Member }
+    - { name: Henry Van Weelderen, role: Member }
     - { name: Jose Damara Hadriana, role: Member, photo: jose_damara_hadriana.jpg }
     - { name: Tiger Wang, role: Member }
     - { name: Yash Garg, role: Member }
@@ -64,7 +67,7 @@
     - { name: Isaac Maljaars, role: Member }
     - { name: Steven Yuan, role: Member }
     - { name: Kathryne Zong, role: Member }
-    - { name: Joao Landim, role: Member }
+    - { name: Joao Pedro De Moraes Paes Landim, role: Member }
     - { name: Zhiwen Zhong, role: Member }
 
 - id: endeffector
@@ -75,7 +78,7 @@
   members:
     - { name: Danny Do, role: Member }
     - { name: Lena Le, role: Member }
-    - { name: Pasariya Vorapa, role: Member }
+    - { name: Pasariya Vorapanya, role: Member }
     - { name: Yichen Liu, role: Member }
     - { name: Mac Gao, role: Member }
 
@@ -90,4 +93,4 @@
     - { name: Terry Deng, role: Member }
     - { name: Felix Ma, role: Member }
     - { name: Sharvya Verma, role: Member }
-    - { name: Tansihq Patel, role: Member }
+    - { name: Tanishq Patel, role: Member }
