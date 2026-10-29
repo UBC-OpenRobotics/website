@@ -3,7 +3,12 @@
 - name: Projects
   link: /projects
 - name: Roster
-  link: /roster
+  link: /roster/2026-2027
+  dropdown:
+    - name: 2026 - 2027
+      link: /roster/2026-2027
+    - name: 2025 - 2026
+      link: /roster
 - name: Join
   link: /join
 - name: Learn
