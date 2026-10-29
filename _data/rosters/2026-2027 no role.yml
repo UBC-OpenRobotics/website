@@ -1,0 +1,50 @@
+# Roster 2026-2027
+# - leads: shown with photos
+# - members: names only, listed under the leads
+# - short: label for the jump button (defaults to name)
+
+- id: captains
+  name: Captains
+  leads:
+    - { name: Nate Noguera, role: Co-Captain, photo: nate_noguera.JPG }
+    - { name: Patrick Delfin, role: Co-Captain, photo: patrick_delfin.png }
+  
+- id: exoskeleton
+  name: Operator Haptic Exoskeleton
+  short: Exoskeleton
+  leads:
+    - { name: Andy Setiawan, role: Co-Lead, photo: andy_setiawan.JPG }
+    - { name: Kenneth Manohar, role: Co-Lead, photo: kenneth_manohar.png }
+  members: [Guanyu Zhu, Trieu Truong, Boswell Tsang, Daniel Xie, Sharvari Dhuri, 
+  Grae Hansen, Brian Madappilly, Bradley Wong, Ceyang Dong, Leo Dronov]
+
+- id: motiontracking
+  name: Operator Hand Motion Tracking
+  short: Motion Tracking
+  leads:
+    - { name: Hasna Aulia, role: Lead, photo: hasna_aulia.jpeg }
+  members: [Bianca Li, Henry van Weelderen, Jose Damara Hadriana, Tiger Wang,
+  Yash Garg, Srija Belide]
+
+- id: arm
+  name: Robot 6DOF Arm
+  short: Robot Arm
+  leads:
+    - { name: Kevin Gao, role: Mechanical Lead, photo: kevin_gao.JPG }
+    - { name: Artur Kochetygov, role: Electrical Lead, photo: artur_kochetygov.jpg }
+  members: [Jacky Chan, Harry Nguyen, Fiona Lin, Kimathy Tagoe, Isaac Maljaars, Steven Yuan,
+  Kathryne Zong, Joao Landim, Zhiwen Zhong]
+
+- id: endeffector
+  name: Robot Force-Sensing End Effector
+  short: End Effector
+  leads:
+    - { name: Nam Ha, role: Lead, photo: nam_ha.jpg }
+  members: [Danny Do, Lena Le, Pasariya Vorapa, Yichen Liu, Mac Gao]
+
+- id: communications
+  name: Communications & Telemetry
+  short: Communications
+  leads:
+    - { name: Mudasser Jalal, role: Lead, photo: mudasser_jalal.jpg }
+  members: [Piyusha Satija, Daniel Ko, Terry Deng, Felix Ma, Sharvya Verma, Tansihq Patel]
