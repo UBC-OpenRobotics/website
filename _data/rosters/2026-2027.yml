@@ -29,14 +29,14 @@
     - { name: Andy Setiawan, role: Co-Lead, photo: andy_setiawan.JPG }
     - { name: Kenneth Manohar, role: Co-Lead, photo: kenneth_manohar.png }
   members:
-    - { name: Guanyu Zhu, role: Member }
-    - { name: Trieu Truong, role: Member }
+    - { name: Guanyu Zhu, role: Member, photo: guanyu_zhu.JPG }
+    - { name: Trieu Truong, role: Member, photo: trieu_truong.png }
+    - { name: Sharvari Dhuri, role: Member, photo: sharvari_dhuri.JPG }
+    - { name: Brian Madappilly, role: Member, photo: brian_madappilly.JPG }
+    - { name: Bradley Wong, role: Member, photo: bradley_wong.JPG }
     - { name: Boswell Tsang, role: Member }
     - { name: Daniel Xie, role: Member }
-    - { name: Sharvari Dhuri, role: Member }
     - { name: Grae Hansen, role: Member }
-    - { name: Brian Madappilly, role: Member }
-    - { name: Bradley Wong, role: Member }
     - { name: Ceyang Dong, role: Member }
     - { name: Leo Dronov, role: Member }
 
@@ -46,8 +46,8 @@
   leads:
     - { name: Hasna Aulia, role: Lead, photo: hasna_aulia.jpeg }
   members:
-    - { name: Bianca Li, role: Member }
-    - { name: Henry Van Weelderen, role: Member }
+    - { name: Bianca Li, role: Member, photo: bianca_li.jpeg }
+    - { name: Henry Van Weelderen, role: Member, photo: henry_van_weelderen.JPG }
     - { name: Jose Damara Hadriana, role: Member, photo: jose_damara_hadriana.jpg }
     - { name: Tiger Wang, role: Member }
     - { name: Yash Garg, role: Member }
@@ -60,13 +60,13 @@
     - { name: Kevin Gao, role: Mechanical Lead, photo: kevin_gao.JPG }
     - { name: Artur Kochetygov, role: Electrical Lead, photo: artur_kochetygov.jpg }
   members:
+    - { name: Harry Nguyen, role: Member, photo: harry_nguyen.JPG }
+    - { name: Fiona Lin, role: Member, photo: fiona_lin.jpg }
+    - { name: Kathryne Zong, role: Member, photo: kathryne_zong.JPG }
     - { name: Jacky Chan, role: Member }
-    - { name: Harry Nguyen, role: Member }
-    - { name: Fiona Lin, role: Member }
     - { name: Kimathy Tagoe, role: Member }
     - { name: Isaac Maljaars, role: Member }
     - { name: Steven Yuan, role: Member }
-    - { name: Kathryne Zong, role: Member }
     - { name: Joao Pedro De Moraes Paes Landim, role: Member }
     - { name: Zhiwen Zhong, role: Member }
 
@@ -76,7 +76,7 @@
   leads:
     - { name: Nam Ha, role: Lead, photo: nam_ha.jpg }
   members:
-    - { name: Danny Do, role: Member }
+    - { name: Danny Do, role: Member, photo: danny_do.JPG }
     - { name: Lena Le, role: Member }
     - { name: Pasariya Vorapanya, role: Member }
     - { name: Yichen Liu, role: Member }
@@ -88,7 +88,7 @@
   leads:
     - { name: Mudasser Jalal, role: Lead, photo: mudasser_jalal.jpg }
   members:
-    - { name: Piyusha Satija, role: Member }
+    - { name: Piyusha Satija, role: Member, photo: piyusha_satija.JPG }
     - { name: Daniel Ko, role: Member }
     - { name: Terry Deng, role: Member }
     - { name: Felix Ma, role: Member }

@@ -139,7 +139,7 @@
               {% assign m_name = member.name | default: member %}
               {% assign m_role = member.role | default: "Member" %}
               <li class="flex items-center gap-3">
-                {% include roster-avatar.html person=member size="w-10 h-10" text="text-sm" border="border-2 border-gray-300 dark:border-gray-600" class="shrink-0" %}
+                {% include roster-avatar.html person=member size="w-16 h-16" text="text-sm" border="border-2 border-gray-300 dark:border-gray-600" class="shrink-0" %}
                 <div class="min-w-0">
                   <p class="text-sm font-bold text-gray-900 dark:text-white leading-tight">{{ m_name }}</p>
                   <p class="text-xs text-gray-600 dark:text-gray-400 leading-tight">{{ m_role }}</p>
