@@ -55,6 +55,9 @@ layout: default
     </div>
     {%- endif -%}
 
+    <!-- 3D CAD models (set cad_models in front matter) -->
+    {% include cad-viewer.html %}
+
     {% include milestones.html %}
 
     {%- if content != "" -%}
