@@ -12,4 +12,10 @@ future: Future development of the arm focuses on improving mechanical precision,
 github: https://github.com/UBC-OpenRobotics/6DoF-Arm
 order: 2
 status: active
+# 3D viewer demo — PLACEHOLDER model, swap for the real arm export (see docs/cad-models.md)
+cad_models:
+  - src: /assets/models/placeholder/robot-arm-placeholder.glb
+    title: Arm assembly (placeholder)
+    caption: Stand-in model until the real CAD export is ready.
+    camera_orbit: "-35deg 70deg auto"
 ---
