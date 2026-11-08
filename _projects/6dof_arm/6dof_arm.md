@@ -14,8 +14,8 @@ order: 2
 status: active
 # 3D viewer demo — PLACEHOLDER model, swap for the real arm export (see docs/cad-models.md)
 cad_models:
-  - src: /assets/models/placeholder/robot-arm-placeholder.glb
-    title: Arm assembly (placeholder)
-    caption: Stand-in model until the real CAD export is ready.
+  - src: /assets/models/arm6dof/arm6dof.glb
+    title: 6DOF Arm Assembly
+    caption: Version 1 of our 6DOF Robot Arm.
     camera_orbit: "-35deg 70deg auto"
 ---
