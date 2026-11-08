@@ -1,0 +1,90 @@
+{%- comment -%}
+  Interactive 3D CAD model viewer (Google <model-viewer>).
+
+  Usage — add to a project's front matter and the project layouts render it automatically:
+
+    cad_models:
+      - src: /assets/models/6dof_arm/arm-assembly.glb   # required, .glb or .gltf
+        title: Full arm assembly                         # required
+        caption: Exported from Onshape, Oct 2026         # optional
+        poster: /assets/models/6dof_arm/arm-poster.webp  # optional, image shown before load
+        camera_orbit: "45deg 70deg auto"                 # optional, starting angle
+        auto_rotate: false                               # optional, defaults to true
+
+  You can also include this file anywhere and pass a list explicitly with a
+  "models=" parameter (it falls back to page.cad_models when none is given).
+
+  See docs/cad-models.md for how to export and compress models.
+{%- endcomment -%}
+{%- assign cad_models = include.models | default: page.cad_models -%}
+{%- if cad_models and cad_models.size > 0 -%}
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.4.0/dist/model-viewer.min.js"></script>
+<style>
+  .cad-viewer model-viewer {
+    --poster-color: transparent;
+    --progress-bar-color: #b91c1c;
+    background-color: transparent;
+  }
+  .cad-viewer .cad-progress {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 4px;
+    background: rgba(0, 0, 0, 0.08); pointer-events: none;
+  }
+  .cad-viewer .cad-progress > div {
+    height: 100%; width: 0; background: #b91c1c; transition: width 0.2s;
+  }
+  .cad-viewer model-viewer:focus-visible { outline: 2px solid #b91c1c; outline-offset: 2px; }
+</style>
+
+<section class="cad-viewer max-w-4xl mx-auto mt-16 mb-16" aria-labelledby="cad-viewer-heading">
+  <h2 id="cad-viewer-heading" class="text-4xl font-semibold text-gray-800 dark:text-gray-100 mb-2 text-center">3D Models</h2>
+  <p class="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Drag to rotate · scroll or pinch to zoom</p>
+
+  <div class="grid grid-cols-1 gap-10">
+    {%- for model in cad_models -%}
+    <figure class="rounded-lg overflow-hidden shadow-md bg-gradient-to-b from-gray-50 to-gray-200 dark:from-gray-800 dark:to-gray-950 border border-gray-200 dark:border-gray-700">
+      <div class="relative">
+        <model-viewer
+          src="{{ model.src | relative_url }}"
+          alt="3D model: {{ model.title | escape }}"
+          camera-controls
+          touch-action="pan-y"
+          {% unless model.auto_rotate == false %}auto-rotate auto-rotate-delay="1500" rotation-per-second="20deg"{% endunless %}
+          interaction-prompt="auto"
+          shadow-intensity="1"
+          exposure="1"
+          environment-image="neutral"
+          loading="lazy"
+          {% if model.poster %}poster="{{ model.poster | relative_url }}"{% endif %}
+          {% if model.camera_orbit %}camera-orbit="{{ model.camera_orbit }}"{% endif %}
+          class="block w-full h-auto aspect-[4/3] md:aspect-video">
+          <div slot="progress-bar" class="cad-progress"><div></div></div>
+          <div slot="error" class="absolute inset-0 flex items-center justify-center p-6 text-center text-gray-600 dark:text-gray-300">
+            Couldn't load this model. Try refreshing the page.
+          </div>
+        </model-viewer>
+      </div>
+      <figcaption class="px-5 py-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <span class="block font-semibold text-gray-800 dark:text-gray-100">{{ model.title }}</span>
+        {%- if model.caption -%}
+        <span class="block text-sm text-gray-600 dark:text-gray-400 mt-1">{{ model.caption }}</span>
+        {%- endif -%}
+      </figcaption>
+    </figure>
+    {%- endfor -%}
+  </div>
+</section>
+
+<script type="module">
+  // Drive the thin red progress bar while each model downloads.
+  document.querySelectorAll('.cad-viewer model-viewer').forEach((mv) => {
+    const bar = mv.querySelector('.cad-progress');
+    const fill = bar && bar.firstElementChild;
+    if (!fill) return;
+    mv.addEventListener('progress', (e) => {
+      const p = e.detail.totalProgress;
+      fill.style.width = (p * 100) + '%';
+      bar.style.display = p >= 1 ? 'none' : 'block';
+    });
+  });
+</script>
+{%- endif -%}
