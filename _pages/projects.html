@@ -111,9 +111,7 @@ permalink: /projects
         </div>
     </section>
 
-    {%- assign all_projects = site.projects | sort: "status" -%}
-    {%- assign sorted_projects = all_projects | where_exp: "item", "item.layout == 'project-main'" -%}
-    {%- assign sorted_subprojects = all_projects | where_exp: "item", "item.layout == 'project-detail'" -%}
+    {% include sorted-projects.html %}
 
     <!-- PROJECT BOXES -->
     <div class="flex flex-wrap flex-row justify-center gap-16 mb-20">
