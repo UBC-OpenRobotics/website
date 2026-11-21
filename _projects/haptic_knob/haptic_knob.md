@@ -59,4 +59,25 @@ The fast motor loop runs at roughly 1 kHz, while the haptic model is updated at 
   <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-2">Dual-loop control architecture: outer haptic model loop and inner current control loop.</p>
 </div>
 
+### See it in action
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto my-8">
+  <figure class="m-0">
+    <video controls playsinline preload="metadata"
+           class="w-full rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 bg-black">
+      <source src="{{ '/assets/videos/hapticknob/demo-2.mp4' | relative_url }}" type="video/mp4">
+      Your browser does not support embedded video.
+    </video>
+    <figcaption class="text-center text-sm text-gray-600 dark:text-gray-400 mt-2">Haptic Knob demo (latest)</figcaption>
+  </figure>
+  <figure class="m-0">
+    <video controls playsinline preload="metadata"
+           class="w-full rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 bg-black">
+      <source src="{{ '/assets/videos/hapticknob/demo-1.mp4' | relative_url }}" type="video/mp4">
+      Your browser does not support embedded video.
+    </video>
+    <figcaption class="text-center text-sm text-gray-600 dark:text-gray-400 mt-2">Breadboard prototype demo</figcaption>
+  </figure>
+</div>
+
 </div>
