@@ -15,9 +15,9 @@ order: 5
 status: completed
 wip: false
 cad_models:
-  - src: /assets/models/placeholder/haptic-knob-pcb-placeholder.glb
-    title: Haptic Knob PCB (placeholder)
-    caption: Stand-in model until the real PCB CAD export is ready.
+  - src: /assets/models/hapticknob/hapticknob-pcb.glb
+    title: Haptic Knob PCB
+    caption: Simplified 3D model of the Haptic Knob PCB
     camera_orbit: "35deg 60deg auto"
 ---
 
