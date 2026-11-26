@@ -57,6 +57,61 @@ permalink: /sponsors/
     </div>
   </section>
 
+  <!-- Current Sponsors Section -->
+  {%- assign current_sponsors = site.static_files | where_exp: "file", "file.path contains '/assets/logos/sponsors/partners/'" -%}
+  {%- if current_sponsors.size > 0 -%}
+  <section class="bg-white dark:bg-gray-900 py-20">
+    <div class="container mx-auto px-4 max-w-6xl">
+      <div class="text-center mb-14">
+        <h2 class="text-5xl md:text-6xl font-black text-gray-900 dark:text-white mb-4">
+          Our <span class="text-red-600">Sponsors</span>
+        </h2>
+        <div class="w-24 h-1 bg-red-600 mx-auto"></div>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-8 max-w-5xl mx-auto">
+        {%- for sponsor in current_sponsors -%}
+        {%- assign sponsor_name = sponsor.name | remove: sponsor.extname -%}
+        {%- unless sponsor_name contains '-dark' -%}
+        {%- assign dark_variant_name = sponsor_name | append: '-dark' | append: sponsor.extname -%}
+        {%- assign dark_variant_path = sponsor.path | replace: sponsor.name, dark_variant_name -%}
+        {%- assign dark_variants = site.static_files | where: "path", dark_variant_path -%}
+        {%- assign has_dark_variant = dark_variants | size -%}
+        {%- assign sponsor_url = "" -%}
+        {%- case sponsor_name -%}
+          {%- when "onshape" -%}
+            {%- assign sponsor_url = "https://www.onshape.com/" -%}
+        {%- endcase -%}
+
+        {%- if sponsor_url != "" -%}
+        <a href="{{ sponsor_url }}" target="_blank" rel="noopener noreferrer"
+           aria-label="{{ sponsor_name | capitalize }}"
+           class="group relative flex items-center justify-center w-full max-w-sm h-40 bg-white dark:bg-gray-800 rounded-2xl px-8 py-6 shadow-xl border border-gray-100 dark:border-gray-700 hover:border-red-500/50 hover:shadow-2xl transition-all duration-300 hover:scale-105">
+        {%- else -%}
+        <div class="group relative flex items-center justify-center w-full max-w-sm h-40 bg-white dark:bg-gray-800 rounded-2xl px-8 py-6 shadow-xl border border-gray-100 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:scale-105">
+        {%- endif -%}
+          <img src="{{ sponsor.path | relative_url }}"
+               alt="{{ sponsor_name | capitalize }}"
+               class="max-w-full max-h-full object-contain{% if has_dark_variant > 0 %} dark:hidden{% endif %}">
+          {% if has_dark_variant > 0 %}
+          <img src="{{ dark_variant_path | relative_url }}"
+               alt="{{ sponsor_name | capitalize }}"
+               class="max-w-full max-h-full object-contain hidden dark:block">
+          {% endif %}
+        {%- if sponsor_url != "" -%}
+        </a>
+        {%- else -%}
+        </div>
+        {%- endif -%}
+        {%- endunless -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {% include divider.html %}
+  {%- endif -%}
+
   <!-- Platinum tier sponsors-->
   <!-- <section class="bg-white dark:bg-gray-900 py-16 max-w-6xl mx-auto">
     <div class="container mx-auto px-4">
@@ -98,8 +153,6 @@ permalink: /sponsors/
     </div>
   </section> -->
 
-  {% include divider.html %}
-
   <!-- Gold tier sponsors -->
   <!-- <section class="bg-white dark:bg-gray-900 py-16 max-w-6xl mx-auto">
     <div class="container mx-auto px-4">
@@ -138,8 +191,6 @@ permalink: /sponsors/
       </div>
     </div>
   </section> -->
-
-  {% include divider.html %}
 
   <!-- Silver tier sponsors -->
   <!-- <section class="bg-white dark:bg-gray-900 py-16 max-w-6xl mx-auto">

@@ -1,0 +1,20 @@
+{%- comment -%}
+  Group projects by status (in the order below), then sort by the `order`
+  front matter field within each group. Sorting by status alone left ties
+  in an arbitrary (folder-name) order.
+{%- endcomment -%}
+{%- assign status_order = "active,completed,on hold,archived" | split: "," -%}
+{%- assign all_projects = site.projects | sort: "order" -%}
+{%- assign main_projects = all_projects | where_exp: "item", "item.layout == 'project-main'" -%}
+{%- assign sorted_projects = "" | split: "" -%}
+{%- for status in status_order -%}
+  {%- assign status_group = main_projects | where: "status", status -%}
+  {%- assign sorted_projects = sorted_projects | concat: status_group -%}
+{%- endfor -%}
+{%- comment -%} Keep any project whose status isn't listed above, at the end. {%- endcomment -%}
+{%- for project in main_projects -%}
+  {%- unless status_order contains project.status -%}
+    {%- assign sorted_projects = sorted_projects | push: project -%}
+  {%- endunless -%}
+{%- endfor -%}
+{%- assign sorted_subprojects = all_projects | where_exp: "item", "item.layout == 'project-detail'" -%}

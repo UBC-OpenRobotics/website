@@ -10,7 +10,7 @@ ideas: "Most teleoperation relies on vision alone, yet research shows haptic fee
 objective: "Build a bilateral teleoperation system where the operator's movements drive the robot arm and the robot's contact forces are rendered back to the operator, fast and stable enough that touching a hard surface feels immediate."
 future: "As the subsystems come together, the team will integrate them into a complete teleoperation system, with a live telemetry dashboard to monitor system health, sensor data, and tracking status."
 github: https://github.com/UBC-OpenRobotics
-order: 6
+order: 0
 status: active
 wip: false
 ---
